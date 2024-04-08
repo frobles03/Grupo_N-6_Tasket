@@ -1,12 +1,54 @@
 /* The side navigation menu */
+
+/* Estilos para la división de secciones */
+.container {
+  display: flex;
+}
+
+.left-section, .right-section {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.left-section {
+  background-color: #f9f9f9;
+}
+
+.right-section {
+  background-color: #eef;
+}
+
+
+  h1 {
+        position: sticky;
+        top: 0;
+        
+        z-index: 1;
+    }
+
+
 .sidebar {
     margin: 0;
     padding: 0;
     width: 200px;
-    background-color: #f1f1f1;
+    background-color: #FE621D;
     position: fixed;
     height: 100%;
+    border-radius: 20px;
     overflow: auto;
+    border: 3px solid #AF3800; ;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #FE621D;
+    position: fixed;
+    height: 100%;
+    border-radius: 20px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   /* Sidebar links */
@@ -28,6 +70,35 @@
     background-color: #555;
     color: white;
   }
+
+  .caja {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    overflow: auto;
+    margin: 10px;
+    color: rgb(255, 255, 255);
+    background-color: #FFB877;
+  }
+
+  section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.caja {
+    flex: 1 0 200px; /
+    margin: 10px; 
+}
+
+body {
+  min-height: 100vh;
+  background: url('background.jpg') center;
+/*
+  background-color: #A0153E;
+  color: #c76c6c;
+*/
+
   
   /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
   div.content {
