@@ -219,6 +219,35 @@ function obtenerPuntajeDeUsuarioEnGrupo(usuarioId, grupoId) {
     return usuarioEnGrupo.puntaje;
 }
 
+function editarTarea(tareaId, nombreTarea, descripcion, puntos, plazo, estado) {
+    const tarea = datos.tareas.find(t => t.id === tareaId);
+    if (tarea) {
+        tarea.nombre = nombreTarea;
+        tarea.descripcion = descripcion;
+        tarea.puntos = puntos;
+        tarea.plazo = plazo;
+        tarea.estado = estado;
+        guardarDatos();
+        return tarea;
+    } else {
+        console.error(`La tarea con id ${tareaId} no existe.`);
+        return null;
+    }
+}
+
+function editarCanje(canjeId, nombreCanje, descripcion, puntosNecesarios) {
+    const canje = datos.canjes.find(c => c.id === canjeId);
+    if (canje) {
+        canje.nombre = nombreCanje;
+        canje.descripcion = descripcion;
+        canje.puntosNecesarios = puntosNecesarios;
+        guardarDatos();
+        return canje;
+    } else {
+        console.error(`El canje con id ${canjeId} no existe.`);
+        return null;
+    }
+}
 
 module.exports = {
     cargarDatos,
@@ -226,7 +255,9 @@ module.exports = {
     crearGrupo,
     añadirUsuarioAGrupo,
     crearTarea,
+    editarTarea, // Agregado
     crearCanje,
+    editarCanje, // Agregado
     editarPuntajeUsuario,
     guardarEvidencia,
     obtenerPuntajeDeUsuarioEnGrupo
