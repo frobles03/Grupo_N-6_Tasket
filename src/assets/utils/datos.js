@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// Ruta al archivo datos.json
 const datosFilePath = path.resolve(__dirname, '../../public/datos.json');
 
 const datos = {
@@ -12,33 +11,58 @@ const datos = {
 };
 
 function guardarDatos() {
-    fs.writeFile(datosFilePath, JSON.stringify(datos, null, 2), 'utf8', (err) => {
-        if (err) {
-            console.error(err);
-            return;
+    return new Promise((resolve, reject) => {
+        try {
+            const jsonData = JSON.stringify(datos, null, 2);
+            JSON.parse(jsonData);
+            fs.writeFile(datosFilePath, jsonData, { encoding: 'utf8', flag: 'w' }, (err) => {
+                if (err) {
+                    console.error('Error al guardar los datos:', err);
+                    reject(err);
+                } else {
+                    console.log('Datos guardados correctamente');
+                    resolve();
+                }
+            });
+        } catch (error) {
+            console.error('Error al convertir los datos a JSON:', error);
+            reject(error);
         }
-        console.log('Datos guardados correctamente');
     });
 }
 
 function cargarDatos() {
-    fs.readFile(datosFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-            return;
+    return new Promise((resolve, reject) => {
+        if (fs.existsSync(datosFilePath)) {
+            fs.readFile(datosFilePath, 'utf8', (err, data) => {
+                if (err) {
+                    console.error('Error al cargar los datos:', err);
+                    reject(err);
+                    return;
+                }
+                try {
+                    Object.assign(datos, JSON.parse(data));
+                    console.log('Datos cargados correctamente');
+                    resolve(datos);
+                } catch (e) {
+                    console.error('Error al parsear los datos:', e);
+                    reject(e);
+                }
+            });
+        } else {
+            console.log('No se encontró ningún archivo de datos existente.');
+            resolve(datos);
         }
-        Object.assign(datos, JSON.parse(data));
-        console.log('Datos cargados correctamente');
     });
 }
+
 
 function crearUsuario(nombreUsuario, contraseña, email) {
     const nuevoUsuario = {
         id: datos.usuarios.length + 1,
         nombreUsuario,
         contraseña,
-        email,
-        puntaje: {}
+        email
     };
     datos.usuarios.push(nuevoUsuario);
     guardarDatos();
@@ -60,43 +84,33 @@ function crearGrupo(nombreGrupo, creadorId) {
 }
 
 function añadirUsuarioAGrupo(usuarioId, grupoId, rol = 'normal') {
-    if (datos.usuarios[usuarioId - 1]) { // Comprobar si el usuario existe
-        if (!datos.usuarios[usuarioId - 1].grupos) { // Comprobar si el usuario tiene la propiedad grupos definida
-            datos.usuarios[usuarioId - 1].grupos = []; // Si no está definida, inicializarla como un array vacío
-        }
-        datos.usuarios[usuarioId - 1].grupos.push(grupoId);
-        datos.usuarios[usuarioId - 1].puntaje[grupoId] = 0; // Inicializar puntaje de usuario para este grupo
+    const grupo = datos.grupos.find(g => g.id === grupoId);
+    if (grupo) {
+        grupo.usuarios.push({ id: usuarioId, rol, puntaje: 0 });
+        guardarDatos();
+    } else {
+        console.error(`El grupo con id ${grupoId} no existe.`);
     }
-    datos.grupos[grupoId - 1].usuarios.push({ id: usuarioId, rol, puntaje: 0 }); // Inicializar puntaje de usuario para este grupo
-    guardarDatos();
 }
 
-function crearTarea(nombreTarea, descripcion, puntos, grupoId) {
+function crearTarea(nombreTarea, descripcion, puntos, grupoId, plazo = null) {
     const nuevaTarea = {
         id: datos.tareas.length + 1,
         nombre: nombreTarea,
         descripcion,
         puntos,
+        plazo,
         estado: 'pendiente'
     };
     datos.tareas.push(nuevaTarea);
-    datos.grupos[grupoId - 1].tareas.push(nuevaTarea);
-    guardarDatos();
-    return nuevaTarea;
-}
-
-function editarTarea(idTarea, nuevoNombre, nuevaDescripcion, nuevosPuntos) {
-    const tarea = datos.tareas.find(t => t.id === idTarea);
-    if (tarea) {
-        tarea.nombre = nuevoNombre;
-        tarea.descripcion = nuevaDescripcion;
-        tarea.puntos = nuevosPuntos;
+    const grupo = datos.grupos.find(g => g.id === grupoId);
+    if (grupo) {
+        grupo.tareas.push(nuevaTarea.id);
         guardarDatos();
-        return tarea;
     } else {
-        console.error('La tarea no existe.');
-        return null;
+        console.error(`El grupo con id ${grupoId} no existe.`);
     }
+    return nuevaTarea;
 }
 
 function crearCanje(nombreCanje, descripcion, puntosNecesarios, grupoId) {
@@ -107,46 +121,104 @@ function crearCanje(nombreCanje, descripcion, puntosNecesarios, grupoId) {
         puntosNecesarios
     };
     datos.canjes.push(nuevoCanje);
-    datos.grupos[grupoId - 1].canjes.push(nuevoCanje);
-    guardarDatos();
+    const grupo = datos.grupos.find(g => g.id === grupoId);
+    if (grupo) {
+        grupo.canjes.push(nuevoCanje.id);
+        guardarDatos();
+    } else {
+        console.error(`El grupo con id ${grupoId} no existe.`);
+    }
     return nuevoCanje;
 }
 
-function editarCanje(idCanje, nuevoNombre, nuevaDescripcion, nuevosPuntos) {
-    const canje = datos.canjes.find(c => c.id === idCanje);
-    if (canje) {
-        canje.nombre = nuevoNombre;
-        canje.descripcion = nuevaDescripcion;
-        canje.puntosNecesarios = nuevosPuntos;
-        guardarDatos();
-        return canje;
-    } else {
-        console.error('El canje no existe.');
-        return null;
-    }
-}
-
-function añadirPuntaje(usuarioId, grupoId, cantidad) {
-    if (datos.usuarios[usuarioId - 1].puntaje.hasOwnProperty(grupoId)) {
-        datos.usuarios[usuarioId - 1].puntaje[grupoId] += cantidad;
-        guardarDatos();
-    } else {
-        console.error('El usuario no pertenece a este grupo.');
-    }
-}
-
-function eliminarPuntaje(usuarioId, grupoId, cantidad) {
-    if (datos.usuarios[usuarioId - 1].puntaje.hasOwnProperty(grupoId)) {
-        if (datos.usuarios[usuarioId - 1].puntaje[grupoId] >= cantidad) {
-            datos.usuarios[usuarioId - 1].puntaje[grupoId] -= cantidad;
-            guardarDatos();
+async function editarPuntajeUsuario(usuarioId, grupoId, cantidad) {
+    const grupo = datos.grupos.find(group => group.id === grupoId);
+    if (grupo) {
+        const usuario = grupo.usuarios.find(user => user.id === usuarioId);
+        if (usuario) {
+            if (cantidad > 0) {
+                usuario.puntaje += cantidad;
+            } else if (cantidad < 0) {
+                if (usuario.puntaje >= Math.abs(cantidad)) {
+                    usuario.puntaje += cantidad;
+                } else {
+                    console.error('El usuario no tiene suficiente puntaje para eliminar.');
+                    return;
+                }
+            } else {
+                console.error('La cantidad debe ser diferente de cero.');
+                return;
+            }
         } else {
-            console.error('El usuario no tiene suficiente puntaje en este grupo.');
+            console.error('El usuario no pertenece a este grupo.');
+            return;
         }
     } else {
-        console.error('El usuario no pertenece a este grupo.');
+        console.error('El grupo no existe.');
+        return;
+    }
+
+    try {
+        await guardarDatos();
+        console.log('Puntaje del usuario editado correctamente.');
+    } catch (error) {
+        console.error('Error al guardar los datos:', error);
     }
 }
+
+
+
+
+
+
+function guardarEvidencia(usuarioId, grupoId, tareaId, evidencia) {
+    const evidenciaDir = path.resolve(__dirname, '../../assets/evidencia');
+    const grupoDir = path.join(evidenciaDir, `grupo_${grupoId}`);
+    const tareaDir = path.join(grupoDir, `tarea_${tareaId}`);
+    const usuarioDir = path.join(tareaDir, `usuario_${usuarioId}`);
+
+    if (!fs.existsSync(evidenciaDir)) {
+        fs.mkdirSync(evidenciaDir, { recursive: true });
+    }
+    if (!fs.existsSync(grupoDir)) {
+        fs.mkdirSync(grupoDir, { recursive: true });
+    }
+    if (!fs.existsSync(tareaDir)) {
+        fs.mkdirSync(tareaDir, { recursive: true });
+    }
+    if (!fs.existsSync(usuarioDir)) {
+        fs.mkdirSync(usuarioDir, { recursive: true });
+    }
+
+    const evidenciaFilePath = path.join(usuarioDir, 'evidencia.json');
+    fs.writeFile(evidenciaFilePath, JSON.stringify(evidencia, null, 2), 'utf8', (err) => {
+        if (err) {
+            console.error(`Error al guardar la evidencia para la tarea ${tareaId}:`, err);
+        } else {
+            console.log(`Evidencia para la tarea ${tareaId} guardada correctamente.`);
+            const tarea = datos.tareas.find(t => t.id === tareaId);
+            if (tarea) {
+                tarea.estado = 'En revisión';
+                guardarDatos();
+            }
+        }
+    });
+}
+
+function obtenerPuntajeDeUsuarioEnGrupo(usuarioId, grupoId) {
+    const grupo = datos.grupos.find(gr => gr.id === grupoId);
+    if (!grupo) {
+        console.error(`El grupo con id ${grupoId} no existe.`);
+        return null;
+    }
+    const usuarioEnGrupo = grupo.usuarios.find(u => u.id === usuarioId);
+    if (!usuarioEnGrupo) {
+        console.error(`El usuario con id ${usuarioId} no pertenece al grupo ${grupoId}.`);
+        return null;
+    }
+    return usuarioEnGrupo.puntaje;
+}
+
 
 module.exports = {
     cargarDatos,
@@ -154,9 +226,8 @@ module.exports = {
     crearGrupo,
     añadirUsuarioAGrupo,
     crearTarea,
-    editarTarea,
     crearCanje,
-    editarCanje,
-    añadirPuntaje,
-    eliminarPuntaje
+    editarPuntajeUsuario,
+    guardarEvidencia,
+    obtenerPuntajeDeUsuarioEnGrupo
 };
