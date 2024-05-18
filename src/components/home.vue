@@ -6,7 +6,7 @@
       <h3>instrucciones:</h3>
       <h4>Si desea modificar el nombre de una tarea o de la lista de quehaceres, haga clic en ella. Seguido de esto
         aparecerá un evento "Dom" para modificar el texto seleccionado.</h4>
-      <h4>para agreagar una tarea a la lista deve escribir en el recuadro blanco y luego precionar la tacla "Enter"
+      <h4>para agreagar una tarea a la listassassaasasa deve escribir en el recuadro blanco y luego precionar la tacla "Enter"
       </h4>
     </nav>
 

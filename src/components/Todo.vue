@@ -1,12 +1,10 @@
 <template>
   <div class="container">
-    <Sidebar />
+    <Sidebar/>
 
     <div class="content">
       <nav>
-        <h3>instrucciones:</h3>
-        <h4>Si desea modificar el nombre de una tarea o de la lista de quehaceres, haga clic en ella. Seguido de esto
-          aparecerá un evento "Dom" para modificar el texto seleccionado.</h4>
+  
         <h4>para agreagar una tarea a la lista deve escribir en el recuadro blanco y luego precionar la tacla "Enter"
         </h4>
       </nav>
@@ -112,20 +110,6 @@ function removeTask(board, task) {
   height: 100vh;
 }
 
-.sidebar {
-   border: 3px solid #AF3800; 
-    background-color: #FE621D;
-  width: 250px;
-  position: fixed;
-
-  height: 90vh;
-  overflow: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 20px;
-}
 
 .content {
   flex-grow: 1;
