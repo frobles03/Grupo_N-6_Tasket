@@ -1,10 +1,13 @@
 <script setup>
 import Todo from "./components/Todo.vue";
+import Perfil from './components/Perfil.vue'
+
 </script>
 
 <template>
   <main>
-    <Todo />
+
+    <router-view/>
   </main>
 </template>
 
