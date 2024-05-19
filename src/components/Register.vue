@@ -1,45 +1,70 @@
 <template>
-    <Sidebar/>
-    <div class="register">
-      <h2>Registrarse</h2>
-      <form @submit="register">
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" v-model="email" required>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" v-model="password" required>
-        <label for="confirmPassword">Confirmar contraseña:</label>
-        <input type="password" id="confirmPassword" v-model="confirmPassword" required>
-        <button type="submit">Registrarse</button>
-      </form>
-      <div>
-        <br><a href="#">¿Ya tienes una cuenta? Inicia sesión</a> <br>
-      </div>
-    </div>
-  </template>
-  
-  <script>
-  import Sidebar from './Sidebar.vue'
-  
-  export default {
-    name: 'Register',
-    components: {
-      Sidebar
-    },
-    data() {
-      return {
-        email: '',
-        password: '',
-        confirmPassword: ''
+  <Sidebar/>
+  <div class="register">
+    <h2>Registrarse</h2>
+    <form @submit="register">
+      <label for="fullName">Nombre completo:</label>
+      <input type="text" id="fullName" v-model="fullName" required>
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" v-model="email" required>
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" v-model="password" required>
+      <label for="confirmPassword">Confirmar contraseña:</label>
+      <input type="password" id="confirmPassword" v-model="confirmPassword" required>
+      <label for="birthDate">Fecha de nacimiento:</label>
+      <input type="date" id="birthDate" v-model="birthDate" required>
+      <label for="gender">Género:</label>
+      <select id="gender" v-model="gender" required>
+        <option disabled value="">Por favor selecciona un género</option>
+        <option>Masculino</option>
+        <option>Femenino</option>
+        <option>Otro</option>
+      </select> 
+      <br>
+      <button type="submit">Registrarse</button>
+    </form>
+   
+  </div>
+</template>
+<script>
+import Sidebar from './Sidebar.vue'
+
+export default {
+  name: 'Register',
+  components: {
+    Sidebar
+  },
+  data() {
+    return {
+      fullName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      birthDate: '',
+      gender: ''
+    }
+  },
+  methods: {
+    register() {
+      // Verificar que las contraseñas sean iguales
+      if (this.password !== this.confirmPassword) {
+        alert('Las contraseñas no coinciden. Por favor, verifica e intenta de nuevo.');
+        return;
       }
-    },
-    methods: {
-      register() {
-        console.log('Registrarse');
+
+      // Validar la fecha de nacimiento
+      const year = new Date(this.birthDate).getFullYear();
+      if (isNaN(year) || year.toString().length !== 4) {
+        alert('Por favor, introduce un año válido con 4 dígitos en la fecha de nacimiento.');
+        return;
       }
+
+      console.log('Registrarse');
     }
   }
-  </script>
-  
+}
+</script>
+
   <style scoped>
   .register {
     display: flex;

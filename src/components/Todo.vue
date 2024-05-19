@@ -19,7 +19,7 @@
             <div class="input">
               <input v-model="board.newItemText" @keydown.enter="handleNewItem(board)" />
             </div>
-            <!-- Asegúrate de cerrar todos los divs y otros elementos aquí -->
+           
           </div>
         </div>
       </div>

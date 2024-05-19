@@ -13,8 +13,10 @@
           <br>
           <li><router-link to="/perfil"><font-awesome-icon icon="user" /> Perfil</router-link></li>
           <br>
-          <li><font-awesome-icon icon="cog" /> Configuración</li>         
+          <li><font-awesome-icon icon="shopping-cart" /> Tienda de Canje</li>
           <br>     
+          <li><font-awesome-icon icon="cog" /> Configuración</li>         
+
         </ul>
         <h2 class="center-text">Grupos</h2>
     <nav>
@@ -30,6 +32,15 @@
         <li>Grupo 8</li>
         <li>Grupo 9</li>
         <li>Grupo 10</li>
+        <li>Grupo 11</li>
+        <li>Grupo 12</li>
+        <li>Grupo 13</li>
+        <li>Grupo 14</li>
+        <li>Grupo 15</li>
+        <li>Grupo 16</li>
+        <li>Grupo 17</li>
+        <li>Grupo 18</li>
+        <li>Grupo 19</li>
 
       </ul>
         </nav>
@@ -59,6 +70,7 @@ export default {
 </script>
 <style scoped>
 .sidebar {
+ 
   border: 3px solid #AF3800;
   background-color: #FE621D;
   width: 200px;
@@ -66,7 +78,7 @@ export default {
   position: fixed;
   height: 94%;
   overflow: auto;
-  padding: 20px 0;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -100,7 +112,7 @@ ul.large-list {
   text-align: center;
 }
 .scrollable-list {
-  max-height: 200px; /* Ajusta este valor según tus necesidades */
+  max-height: 100px; 
   overflow-y: auto;
 }
 </style>
