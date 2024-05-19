@@ -4,22 +4,33 @@
 
     <div class="content">
       <nav>
-  
-        <h4>para agreagar una tarea a la lista deve escribir en el recuadro blanco y luego precionar la tacla "Enter"
-        </h4>
+        <h4>Tasket un lugar para organizar tus cosas.. o algo asi  </h4>
       </nav>
 
       <div class="boards-container">
-        <a href="#" @click="createNewBoard">Añadir una lista</a>
+        <button @click="createNewBoard">Añadir una lista</button>
         <div class="boards">
           <div class="board" v-for="board in boards" :key="board.id">
             <div class="board-header">
-              <span @click="renameBoard(board)">{{ board.name }}</span>
+              <label for="board-name-{{board.id}}">
+                <span @click="renameBoard(board)">{{ board.name }}</span>
+              </label>
             </div>
             <div class="input">
-              <input v-model="board.newItemText" @keydown.enter="handleNewItem(board)" />
+              <label for="new-item-{{board.id}}">
+                <input id="new-item-{{board.id}}" v-model="board.newItemText" @keydown.enter="handleNewItem(board)" autocomplete="off" />
+              </label>
             </div>
-           
+            <ul>
+              <li v-for="item in board.items" :key="item.id">
+                <div class="task-header">
+                  <label for="task-title-{{item.id}}">
+                    <span @click="renameTask(item)">{{ item.title }}</span>
+                  </label>
+                  <button @click="removeTask(board, item)">Eliminar</button>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -31,38 +42,33 @@
 import { ref, reactive } from "vue";
 import Sidebar from './Sidebar.vue';
 
-const boards = reactive([
+let boards = reactive([
   {
-    id: "1",
-    name: "tablero 1",
-    newItemText: "",
-    items: [{ id: "1", title: "primera tarea" }],
+    id: generateId(),
+    name: "board-1",
+    items: [{ id: generateId(), title: "Hola a todos" }],
+    newItemText: "", 
   },
-  {
-    id: "2",
-    name: "tablero 2",
-    newItemText: "",
-    items: [{ id: "1", title: "primera tarea" }],
-  }
 ]);
 
 function handleNewItem(board) {
   const text = board.newItemText.trim();
   if (text !== "") {
-    board.items.push({ id: Math.random().toString(36).substr(2, 9), title: text });
+    board.items.push({ id: generateId(), title: text });
     board.newItemText = "";
   }
 }
 
 function createNewBoard() {
-  const name = prompt("nombre del tablero");
+  const name = prompt("Name of board");
   if (name) {
     const board = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: generateId(),
       name: name,
-      newItemText: "",
       items: [],
+      newItemText: "", 
     };
+
     boards.push(board);
   }
 }
@@ -87,42 +93,36 @@ function removeTask(board, task) {
     board.items.splice(index, 1);
   }
 }
+
+// Función para generar un identificador único
+function generateId() {
+  return Math.random().toString(36).substr(2, 9);
+}
+
 </script>
 
 
 <style scoped>
+
+
 .boards {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 10px;
 }
 
 .board {
-  border: 1px solid #ccc;
-  padding: 20px;
-  background-color: #f5f5f5;
-  margin: 20px;
-  border-radius: 5px;
+  background: #ccc;
+  padding: 15px;
 }
 
-.container {
-  display: flex;
-  height: 100vh;
+.board-header {
+  cursor: pointer;
 }
-
-
 .content {
-  flex-grow: 1;
-  overflow: auto;
-  margin-left: 270px; /* Añadido para compensar el espacio de la barra lateral */
+  
+  padding-left: 250px; /* Ajusta este valor según el ancho de tu barra lateral */
 }
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100px;
-  }
-  .content {
-    margin-left: 100px; /* Ajustado para compensar el espacio de la barra lateral en pantallas pequeñas */
-  }
+.task-header {
+  cursor: pointer;
 }
 </style>
