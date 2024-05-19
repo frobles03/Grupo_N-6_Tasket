@@ -13,7 +13,7 @@
           <br>
           <li><router-link to="/perfil"><font-awesome-icon icon="user" /> Perfil</router-link></li>
           <br>
-          <li><font-awesome-icon icon="shopping-cart" /> Tienda de Canje</li>
+          <li><router-link to="/TiendaCanje"><font-awesome-icon icon="shopping-cart" /> Tienda de Canje</router-link></li>
           <br>     
           <li><font-awesome-icon icon="cog" /> Configuración</li>         
 

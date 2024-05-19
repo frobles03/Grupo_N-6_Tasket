@@ -4,6 +4,12 @@
         <TarjetaCanje></TarjetaCanje>
         <TarjetaCanje></TarjetaCanje>
         <TarjetaCanje></TarjetaCanje>
+        <TarjetaCanje></TarjetaCanje>
+        <TarjetaCanje></TarjetaCanje>
+        <TarjetaCanje></TarjetaCanje>
+        <TarjetaCanje></TarjetaCanje>
+        <TarjetaCanje></TarjetaCanje>
+        <TarjetaCanje></TarjetaCanje>
         
     </div>
     
@@ -20,7 +26,8 @@ import TarjetaCanje from './TarjetaCanje.vue'
 
 .container{
 
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     padding-left: 5%;
     padding-right: 5%;
 }
