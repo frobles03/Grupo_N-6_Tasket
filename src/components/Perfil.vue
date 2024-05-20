@@ -1,33 +1,43 @@
 <template>
   <div class="container">
-    <Sidebar/>
+    <Sidebar />
     <div class="perfil">
       <div class="perfil-box">
         <h1 class="welcome-text">Perfil</h1>
         <p class="user-info">Nombre: Fernando Robles</p>
-        <br>
         <p class="user-info">Alias: fernando03</p>
-        <br>
         <p class="user-info">Email: f.robles03@ufromail.cl</p>
+
+        <!-- Sección de grupos que administras -->
+        <div class="user-info">
+          <h2 class="center-text">Grupos que administras</h2>
+          <ul>
+            <router-link to="/tareas-canjes-admin" class="router-link">Grupo 1</router-link>
+          </ul>
+        </div>
+
+        <!-- Sección de grupos en los que participas -->
         <div class="user-info">
           <h2 class="center-text">Grupos en los que participas</h2>
-        
+          <ul>
+            <li>Grupo 1, Grupo 2, Grupo 3, Grupo 4, Grupo 5</li>
+          </ul>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Sidebar from './Sidebar.vue'
-import '@/assets/global.css';
+import Sidebar from './Sidebar.vue';
 
 export default {
   name: 'Perfil',
   components: {
     Sidebar
   }
-}
+};
 </script>
 
 <style scoped>
@@ -42,11 +52,11 @@ export default {
   border: 1px solid #000;
   padding: 2vh;
   width: 80vw;
-  max-width: 600px; /* Ajusta este valor según tus necesidades */
+  max-width: 600px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin: auto; /* Centra el perfil-box horizontalmente */
+  margin: auto;
 }
 
 .welcome-text {
@@ -60,5 +70,10 @@ export default {
 .user-info {
   margin-top: 1vh;
   font-size: 16px;
+}
+
+.router-link {
+  color: blue;
+  cursor: pointer;
 }
 </style>
