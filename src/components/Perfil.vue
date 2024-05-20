@@ -20,6 +20,7 @@
 
 <script>
 import Sidebar from './Sidebar.vue'
+import '@/assets/global.css';
 
 export default {
   name: 'Perfil',

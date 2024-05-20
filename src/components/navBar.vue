@@ -33,6 +33,7 @@
 
 <script>
 import { useRouter } from 'vue-router';
+import '@/assets/global.css';
 
 export default {
  name: 'NavBar',

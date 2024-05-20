@@ -19,6 +19,7 @@
 
 <script setup>
 import TarjetaCanje from './TarjetaCanje.vue'
+import '@/assets/global.css';
 
 </script>
 

@@ -12,6 +12,8 @@
  <script setup>
  import ContenedorCanjes from './ContenedorCanjes.vue'
  import Sidebar from './Sidebar.vue'
+ import '@/assets/global.css';
+
  
  </script>
  

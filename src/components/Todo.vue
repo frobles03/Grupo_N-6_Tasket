@@ -41,6 +41,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 import Sidebar from './Sidebar.vue';
+import '@/assets/global.css';
 
 let boards = reactive([
   {
