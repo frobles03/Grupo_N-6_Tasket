@@ -7,17 +7,13 @@
     <main class="main-content">
       <nav>
         <ul class="large-list">
-            <li  style="color: white" ><router-link to="/"><font-awesome-icon icon="home"  style="color: white" /> Inicio</router-link></li>      
-            <br>
-            <li  style="color: white" ><font-awesome-icon icon="bell" style="color: white" /> Notificaciones</li>
-            <br>
-            <li  style="color: white" ><router-link to="/perfil"><font-awesome-icon icon="user" style="color: white" /> Perfil</router-link></li>
-            <br>
-            <li style="color: white" ><router-link to="/TiendaCanje"><font-awesome-icon icon="shopping-cart" style="color: white" /> Tienda de Canje</router-link></li>
-            <br>     
-            <li style="color: white" ><font-awesome-icon icon="cog" style="color: white" /> Configuración</li>         
-
+          <li style="color: white; margin-right: 5px;"><router-link to="/"><font-awesome-icon icon="home" style="color: white; margin-right: 5px;" />Inicio</router-link></li><br>
+          <li style="color: white; margin-right: 5px;"><font-awesome-icon icon="bell" style="color: white; margin-right: 5px;" />Notificaciones</li><br>
+          <li style="color: white; margin-right: 5px;"><router-link to="/perfil"><font-awesome-icon icon="user" style="color: white; margin-right: 5px;" />Perfil</router-link></li><br>
+          <li style="color: white; margin-right: 5px;"><router-link to="/TiendaCanje"><font-awesome-icon icon="shopping-cart" style="color: white; margin-right: 5x;" />Tienda de Canje</router-link></li><br>
+          <li style="color: white; margin-right: 5px;"><font-awesome-icon icon="cog" style="color: white; margin-right: 5px;" />Configuración</li>
         </ul>
+        
         <h2 class="center-text"  style="color: white" >Grupos</h2>
     <nav>
       <ul class="scrollable-list"  style="color: white" >
@@ -70,7 +66,6 @@ export default {
 </script>
 <style scoped>
 .sidebar {
- 
   border: 3px solid #AF3800;
   background-color: #FE621D;
   width: 200px;
