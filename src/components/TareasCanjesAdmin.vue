@@ -55,6 +55,8 @@
 <script>
 import Sidebar from './Sidebar.vue';
 import { cargarDatosDesdeJSON } from '../utils/datos_avance2.js';
+import '@/assets/global.css';
+
 
 export default {
     name: 'TareasCanjesAdmin',
