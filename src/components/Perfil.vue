@@ -7,23 +7,44 @@
         <p class="user-info">Nombre: Fernando Robles</p>
         <p class="user-info">Alias: fernando03</p>
         <p class="user-info">Email: f.robles03@ufromail.cl</p>
+        <div class="grupos-container">
+          <div class="user-info scrollable-section">
+            <h2 class="center-text">Grupos que administras</h2>
+            <ul>
+              <li><router-link to="/tareas-canjes-admin" class="router-link">Grupo 1</router-link></li>
+              <li>Grupo 2</li>
+              <li>Grupo 3</li>
+              <li>Grupo 4</li>
+              <li>Grupo 5</li>
+            </ul>
+          </div>
 
-        <!-- Sección de grupos que administras -->
-        <div class="user-info">
-          <h2 class="center-text">Grupos que administras</h2>
-          <ul>
-            <router-link to="/tareas-canjes-admin" class="router-link">Grupo 1</router-link>
-          </ul>
+          <div class="user-info scrollable-section">
+            <h2 class="center-text">Grupos en los que participas</h2>
+            <ul>
+              <li>Grupo 1</li>
+              <li>Grupo 2</li>
+              <li>Grupo 3</li>
+              <li>Grupo 4</li>
+              <li>Grupo 5</li>
+              <li>Grupo 6</li>
+              <li>Grupo 7</li>
+              <li>Grupo 8</li>
+              <li>Grupo 9</li>
+              <li>Grupo 10</li>
+              <li>Grupo 11</li>
+              <li>Grupo 12</li>
+              <li>Grupo 13</li>
+              <li>Grupo 14</li>
+              <li>Grupo 15</li>
+              <li>Grupo 16</li>
+              <li>Grupo 17</li>
+              <li>Grupo 18</li>
+              <li>Grupo 19</li>
+              <li>Grupo 20</li>
+            </ul>
+          </div>
         </div>
-
-        <!-- Sección de grupos en los que participas -->
-        <div class="user-info">
-          <h2 class="center-text">Grupos en los que participas</h2>
-          <ul>
-            <li>Grupo 1, Grupo 2, Grupo 3, Grupo 4, Grupo 5</li>
-          </ul>
-        </div>
-
       </div>
     </div>
   </div>
@@ -32,7 +53,6 @@
 <script>
 import Sidebar from './Sidebar.vue';
 import '@/assets/global.css';
-
 
 export default {
   name: 'Perfil',
@@ -43,11 +63,17 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+}
+
 .perfil {
-  flex: 3;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  margin-left: 220px;
 }
 
 .perfil-box {
@@ -55,7 +81,7 @@ export default {
   padding: 2vh;
   width: 80vw;
   max-width: 600px;
-  background-color: #fff;
+  background-color: #FE923C;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin: auto;
@@ -77,5 +103,19 @@ export default {
 .router-link {
   color: blue;
   cursor: pointer;
+}
+
+.grupos-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.scrollable-section {
+  flex: 1;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 1vh;
 }
 </style>
