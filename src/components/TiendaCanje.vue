@@ -26,6 +26,9 @@
      padding: 8px;
      border-radius: 10px;
      margin-left: 250px;
+     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+     text-align: center
+
  }
  
  </style>

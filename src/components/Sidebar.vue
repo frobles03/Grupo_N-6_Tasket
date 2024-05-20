@@ -78,10 +78,11 @@ export default {
   position: fixed;
   height: 94%;
   overflow: auto;
-
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 15px;
 }
 
 @media (max-width: 768px) {
