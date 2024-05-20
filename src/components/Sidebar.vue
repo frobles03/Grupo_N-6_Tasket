@@ -1,26 +1,26 @@
 <template>
   <div class="sidebar">
     <header>
-      <h1 class="center-text">Tasket</h1>
+      <h1 class="center-text"  style="color: white" >Tasket</h1>
     </header>
     
     <main class="main-content">
       <nav>
         <ul class="large-list">
-          <li><router-link to="/"><font-awesome-icon icon="home" /> Inicio</router-link></li>      
-          <br>
-          <li><font-awesome-icon icon="bell" /> Notificaciones</li>
-          <br>
-          <li><router-link to="/perfil"><font-awesome-icon icon="user" /> Perfil</router-link></li>
-          <br>
-          <li><router-link to="/TiendaCanje"><font-awesome-icon icon="shopping-cart" /> Tienda de Canje</router-link></li>
-          <br>     
-          <li><font-awesome-icon icon="cog" /> Configuración</li>         
+            <li  style="color: white" ><router-link to="/"><font-awesome-icon icon="home"  style="color: white" /> Inicio</router-link></li>      
+            <br>
+            <li  style="color: white" ><font-awesome-icon icon="bell" style="color: white" /> Notificaciones</li>
+            <br>
+            <li  style="color: white" ><router-link to="/perfil"><font-awesome-icon icon="user" style="color: white" /> Perfil</router-link></li>
+            <br>
+            <li style="color: white" ><router-link to="/TiendaCanje"><font-awesome-icon icon="shopping-cart" style="color: white" /> Tienda de Canje</router-link></li>
+            <br>     
+            <li style="color: white" ><font-awesome-icon icon="cog" style="color: white" /> Configuración</li>         
 
         </ul>
-        <h2 class="center-text">Grupos</h2>
+        <h2 class="center-text"  style="color: white" >Grupos</h2>
     <nav>
-      <ul class="scrollable-list">
+      <ul class="scrollable-list"  style="color: white" >
         <li>Personal</li>
         <li>Grupo 1</li>
         <li>Grupo 2</li>

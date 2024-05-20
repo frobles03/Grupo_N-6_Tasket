@@ -4,7 +4,7 @@
 
     <div class="content">
       <nav>
-        <h4>"Tasket: Simplifica tus tareas, encesta tus objetivos" </h4>
+        <h1 class="centered-text">"Tasket: Simplifica tus tareas, encesta tus objetivos" </h1>
       </nav>
 
       <div class="boards-container">
@@ -23,6 +23,9 @@
                     <span>{{ item.title }}</span>
                   </label>
                 </div>
+              </li>
+              <li v-if="!board.items.length">
+                <div class="empty-list-message">No hay tareas asignadas</div>
               </li>
             </ul>
           </div>
@@ -65,25 +68,37 @@ function toggleBoard(boardId) {
 
 </script>
 
-
 <style scoped>
+.centered-text {
+  text-align: center;
+}
+
+.empty-list-message {
+  color: red;
+  text-align: center;
+}
 .boards {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}.board {
+  background: #EF9E5F;
+  padding: 15px;
+  flex: 1 0 200px;
+  transition: height 0.3s ease;
+  border-radius: 10%;
 }
 
-.board {
-  background: #EF9E5F; /* Cambia el color de fondo a #EF9E5F */
-  padding: 15px;
-  flex: 1 0 200px; /* Esto hará que las tarjetas sean responsivas */
-  transition: height 0.3s ease; /* Añade esta línea */
-  border-radius: 10%;
+.board ul {
+  height: 200px; /* Establece la altura por defecto */
+  max-height: 400px; /* Ajusta este valor según tus necesidades */
+  overflow-y: auto; /* Agrega un scrollbar cuando el contenido excede la altura máxima */
 }
 
 .board.minimized {
   height:10px; /* Reduce el tamaño de la caja minimizada */
 }
+
 
 .board-header {
   display: flex;

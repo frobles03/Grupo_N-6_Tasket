@@ -51,28 +51,35 @@ export default {
 }
 </script>
 <style scoped>
+
 .container {
- display: flex;
- height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
 .sidebar {
- border: 3px solid #AF3800;
- background-color: #FE621D;
- width: 250px;
- position: fixed;
- height: 90vh;
- overflow: auto;
- display: flex;
- align-items: center;
- justify-content: center;
- flex-direction: column;
- border-radius: 20px;
+  border: 3px solid #AF3800;
+  background-color: #FE621D;
+  width: 250px;
+  position: fixed;
+  height: 90vh;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+}
+
+.sidebar h2 {
+  color: #F5F5DC; /* Cambia el color del texto a blanco crema */
 }
 
 @media (max-width: 768px) {
- .sidebar {
-   width: 100px;
- }
+  .sidebar {
+    width: 100px;
+  }
 }
+
+
 </style>
