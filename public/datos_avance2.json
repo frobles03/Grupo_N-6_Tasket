@@ -1,36 +1,52 @@
-[
-  {
-    "ID": 1,
-    "Nombre": "Grupo de Tareas",
-    "Tareas": [
-      {
-        "ID": 3,
-        "Nombre": "Tarea 3",
-        "Descripcion": "Completar tarea 3",
-        "Puntaje": 15,
-        "Estado": "Completada"
-      }
-    ],
-    "Canjes": [
-      {
-        "ID": 1,
-        "Nombre": "Canje 1",
-        "Descripcion": "Canjear artículo 1",
-        "PuntajeRequerido": 50
-      },
-      {
-        "ID": 2,
-        "Nombre": "Canje 2",
-        "Descripcion": "Canjear artículo 2",
-        "PuntajeRequerido": 100
-      },
-      {
-        "ID": 3,
-        "Nombre": "Canje 3",
-        "Descripcion": "Canjear artículo 3",
-        "PuntajeRequerido": 75
-      }
-    ],
-    "id": "b58f"
-  }
-]
+{
+  "grupos": [
+    {
+      "ID": 1,
+      "Nombre": "Grupo de Tareas",
+      "Tareas": [
+        {
+          "ID": 1,
+          "Nombre": "Tarea 3",
+          "Descripcion": "Completar tarea 3",
+          "Puntaje": 15,
+          "Estado": "Completada"
+        },
+        {
+          "ID": 2,
+          "Nombre": "Tarea 3",
+          "Descripcion": "Completar tarea 3",
+          "Puntaje": 15,
+          "Estado": "Completada"
+        },
+        {
+          "ID": 3,
+          "Nombre": "Tarea 3",
+          "Descripcion": "Completar tarea 3",
+          "Puntaje": 15,
+          "Estado": "Completada"
+        }
+      ],
+      "Canjes": [
+        {
+          "ID": 1,
+          "Nombre": "Canje 1",
+          "Descripcion": "Canjear artículo 1",
+          "PuntajeRequerido": 50
+        },
+        {
+          "ID": 2,
+          "Nombre": "Canje 2",
+          "Descripcion": "Canjear artículo 2",
+          "PuntajeRequerido": 100
+        },
+        {
+          "ID": 3,
+          "Nombre": "Canje 3",
+          "Descripcion": "Canjear artículo 3",
+          "PuntajeRequerido": 75
+        }
+      ],
+      "id": "b58f"
+    }
+  ]
+}
