@@ -9,7 +9,7 @@
                     <div>
                         <h3>Tareas:</h3>
                         <ul>
-                            <li v-for="tarea in tareas" :key="tarea.ID">
+                            <li v-for="tarea in grupo.Tareas" :key="tarea.ID">
                                 {{ tarea.Nombre }} - {{ tarea.Descripcion }} - Puntaje: {{ tarea.Puntaje }}
                                 <button @click="iniciarEdicionTarea(tarea)">Editar</button>
                                 <button @click="eliminarTarea(tarea.ID)">Eliminar</button>
@@ -29,7 +29,7 @@
                     <div>
                         <h3>Canjes:</h3>
                         <ul>
-                            <li v-for="canje in canjes" :key="canje.ID">
+                            <li v-for="canje in grupo.Canjes" :key="canje.ID">
                                 {{ canje.Nombre }} - {{ canje.Descripcion }} - Puntaje Requerido: {{ canje.PuntajeRequerido }}
                                 <button @click="iniciarEdicionCanje(canje)">Editar</button>
                                 <button @click="eliminarCanje(canje.ID)">Eliminar</button>
@@ -53,10 +53,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Sidebar from './Sidebar.vue';
-import { cargarDatosDesdeJSON } from '../utils/datos_avance2.js';
 import '@/assets/global.css';
-
 
 export default {
     name: 'TareasCanjesAdmin',
@@ -66,57 +65,76 @@ export default {
     data() {
         return {
             grupo: {
-                Nombre: 'Grupo de Tareas'
+                Nombre: '',
+                Tareas: [],
+                Canjes: []
             },
-            tareas: [],
-            canjes: [],
             tareaEnEdicion: null,
             canjeEnEdicion: null
         };
     },
     methods: {
-        iniciarEdicionTarea(tarea) {
-            this.tareaEnEdicion = { ...tarea };
+        async cargarDatos() {
+            try {
+                const response = await axios.get('http://localhost:3000/grupos');
+                this.grupo = response.data[0];
+                console.log(this.grupo);
+            } catch (error) {
+                console.error('Error al cargar datos desde JSON Server:', error);
+            }
         },
-        cancelarEdicionTarea() {
-            this.tareaEnEdicion = null;
-        },
-        guardarTareaEditada() {
-            const index = this.tareas.findIndex(t => t.ID === this.tareaEnEdicion.ID);
-            if (index !== -1) {
-                this.tareas.splice(index, 1, this.tareaEnEdicion);
+        async guardarTareaEditada() {
+            try {
+                const tareaIndex = this.grupo.Tareas.findIndex(t => t.ID === this.tareaEnEdicion.ID);
+                if (tareaIndex !== -1) {
+                    this.grupo.Tareas[tareaIndex] = { ...this.tareaEnEdicion };
+                }
+                await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+            } catch (error) {
+                console.error('Error al guardar tarea editada:', error);
             }
             this.tareaEnEdicion = null;
+        },
+        async guardarCanjeEditado() {
+            try {
+                const canjeIndex = this.grupo.Canjes.findIndex(c => c.ID === this.canjeEnEdicion.ID);
+                if (canjeIndex !== -1) {
+                    this.grupo.Canjes[canjeIndex] = { ...this.canjeEnEdicion };
+                }
+                await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+            } catch (error) {
+                console.error('Error al guardar canje editado:', error);
+            }
+            this.canjeEnEdicion = null;
+        },
+        async eliminarTarea(id) {
+            try {
+                this.grupo.Tareas = this.grupo.Tareas.filter(t => t.ID !== id);
+                await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+            } catch (error) {
+                console.error('Error al eliminar tarea:', error);
+            }
+        },
+        async eliminarCanje(id) {
+            try {
+                this.grupo.Canjes = this.grupo.Canjes.filter(c => c.ID !== id);
+                await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+            } catch (error) {
+                console.error('Error al eliminar canje:', error);
+            }
+        },
+        iniciarEdicionTarea(tarea) {
+            this.tareaEnEdicion = { ...tarea };
         },
         iniciarEdicionCanje(canje) {
             this.canjeEnEdicion = { ...canje };
         },
+        cancelarEdicionTarea() {
+            this.tareaEnEdicion = null;
+        },
         cancelarEdicionCanje() {
             this.canjeEnEdicion = null;
         },
-        guardarCanjeEditado() {
-            const index = this.canjes.findIndex(c => c.ID === this.canjeEnEdicion.ID);
-            if (index !== -1) {
-                this.canjes.splice(index, 1, this.canjeEnEdicion);
-            }
-            this.canjeEnEdicion = null;
-        },
-        eliminarTarea(id) {
-            this.tareas = this.tareas.filter(t => t.ID !== id);
-        },
-        eliminarCanje(id) {
-            this.canjes = this.canjes.filter(c => c.ID !== id);
-        },
-        cargarDatos() {
-            cargarDatosDesdeJSON()
-                .then(data => {
-                    this.tareas = data.grupos[0].Tareas;
-                    this.canjes = data.grupos[0].Canjes;
-                })
-                .catch(error => {
-                    console.error('Error al cargar datos desde JSON:', error);
-                });
-        }
     },
     mounted() {
         this.cargarDatos();
@@ -157,7 +175,7 @@ export default {
     justify-content: space-between;
 }
 
-.content>div {
+.content > div {
     width: 48%;
 }
 
@@ -171,7 +189,7 @@ export default {
         flex-direction: column;
     }
 
-    .content>div {
+    .content > div {
         width: 100%;
         margin-bottom: 20px;
     }

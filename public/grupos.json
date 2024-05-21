@@ -4,6 +4,20 @@
     "Nombre": "Grupo de Tareas",
     "Tareas": [
       {
+        "ID": 1,
+        "Nombre": "Tarea 1",
+        "Descripcion": "Completar tarea 1",
+        "Puntaje": 10,
+        "Estado": "Pendiente"
+      },
+      {
+        "ID": 2,
+        "Nombre": "Tarea 2",
+        "Descripcion": "Completar tarea 2",
+        "Puntaje": 20,
+        "Estado": "En Progreso"
+      },
+      {
         "ID": 3,
         "Nombre": "Tarea 3",
         "Descripcion": "Completar tarea 3",
@@ -30,7 +44,6 @@
         "Descripcion": "Canjear artículo 3",
         "PuntajeRequerido": 75
       }
-    ],
-    "id": "b58f"
+    ]
   }
 ]
