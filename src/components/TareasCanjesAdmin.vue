@@ -25,6 +25,15 @@
                                 <button @click="cancelarEdicionTarea">Cancelar</button>
                             </form>
                         </div>
+                        <div>
+                            <h3>Agregar Nueva Tarea</h3>
+                            <form @submit.prevent="agregarNuevaTarea">
+                                <label>Nombre: <input v-model="nuevaTarea.Nombre" /></label><br>
+                                <label>Descripción: <input v-model="nuevaTarea.Descripcion" /></label><br>
+                                <label>Puntaje: <input type="number" v-model="nuevaTarea.Puntaje" /></label><br>
+                                <button type="submit">Agregar</button>
+                            </form>
+                        </div>
                     </div>
                     <div>
                         <h3>Canjes:</h3>
@@ -43,6 +52,15 @@
                                 <label>Puntaje Requerido: <input type="number" v-model="canjeEnEdicion.PuntajeRequerido" /></label><br>
                                 <button type="submit">Guardar</button>
                                 <button @click="cancelarEdicionCanje">Cancelar</button>
+                            </form>
+                        </div>
+                        <div>
+                            <h3>Agregar Nuevo Canje</h3>
+                            <form @submit.prevent="agregarNuevoCanje">
+                                <label>Nombre: <input v-model="nuevoCanje.Nombre" /></label><br>
+                                <label>Descripción: <input v-model="nuevoCanje.Descripcion" /></label><br>
+                                <label>Puntaje Requerido: <input type="number" v-model="nuevoCanje.PuntajeRequerido" /></label><br>
+                                <button type="submit">Agregar</button>
                             </form>
                         </div>
                     </div>
@@ -70,7 +88,17 @@ export default {
                 Canjes: []
             },
             tareaEnEdicion: null,
-            canjeEnEdicion: null
+            canjeEnEdicion: null,
+            nuevaTarea: {
+                Nombre: '',
+                Descripcion: '',
+                Puntaje: 0
+            },
+            nuevoCanje: {
+                Nombre: '',
+                Descripcion: '',
+                PuntajeRequerido: 0
+            }
         };
     },
     computed: {
@@ -144,6 +172,26 @@ export default {
         cancelarEdicionCanje() {
             this.canjeEnEdicion = null;
         },
+        async agregarNuevaTarea() {
+            try {
+                const nuevaTareaConID = { ...this.nuevaTarea, ID: Date.now() };
+                this.grupo.Tareas.push(nuevaTareaConID);
+                await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+                this.nuevaTarea = { Nombre: '', Descripcion: '', Puntaje: 0 };
+            } catch (error) {
+                console.error('Error al agregar nueva tarea:', error);
+            }
+        },
+        async agregarNuevoCanje() {
+            try {
+                const nuevoCanjeConID = { ...this.nuevoCanje, ID: Date.now() };
+                this.grupo.Canjes.push(nuevoCanjeConID);
+                await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+                this.nuevoCanje = { Nombre: '', Descripcion: '', PuntajeRequerido: 0 };
+            } catch (error) {
+                console.error('Error al agregar nuevo canje:', error);
+            }
+        }
     },
     mounted() {
         this.cargarDatos();
