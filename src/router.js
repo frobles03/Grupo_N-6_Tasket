@@ -5,7 +5,8 @@ import Todo from './components/Todo.vue'
 import Login from './components/Login.vue'
 import Register from './components/Register.vue'
 import TiendaCanje from './components/TiendaCanje.vue'
-import Home from './components/home.vue'
+import Home from './components/Home.vue';
+
 const routes = [
   { path: '/', component: Home },
   { path: '/perfil', component: Perfil },
