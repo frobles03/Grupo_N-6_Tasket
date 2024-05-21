@@ -4,7 +4,7 @@
         <div class="tareas-canjes-admin">
             <div class="tareas-canjes-admin-box">
                 <h1 class="welcome-text">Tareas y Canjes</h1>
-                <h2 class="center-text">Tareas y Canjes del Grupo {{ grupo.Nombre }}</h2>
+                <h2 class="center-text">Tareas y Canjes del Grupo {{ nombreGrupo }}</h2>
                 <div class="content">
                     <div>
                         <h3>Tareas:</h3>
@@ -72,6 +72,15 @@ export default {
             tareaEnEdicion: null,
             canjeEnEdicion: null
         };
+    },
+    computed: {
+        nombreGrupo() {
+            if (this.grupo && this.grupo.Nombre) {
+                return this.grupo.Nombre;
+            } else {
+                return 'seleccionado';
+            }
+        }
     },
     methods: {
         async cargarDatos() {
