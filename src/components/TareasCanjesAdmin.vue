@@ -10,9 +10,13 @@
                         <h3>Tareas:</h3>
                         <ul>
                             <li v-for="tarea in grupo.Tareas" :key="tarea.ID">
-                                {{ tarea.Nombre }} - {{ tarea.Descripcion }} - Puntaje: {{ tarea.Puntaje }}
-                                <button @click="iniciarEdicionTarea(tarea)">Editar</button>
-                                <button @click="eliminarTarea(tarea.ID)">Eliminar</button>
+                                <div>
+                                    <span>{{ tarea.Nombre }} - {{ tarea.Descripcion }} - Puntaje: {{ tarea.Puntaje }}</span>
+                                    <div class="buttons">
+                                        <button @click="iniciarEdicionTarea(tarea)">Editar</button>
+                                        <button @click="eliminarTarea(tarea.ID)">Eliminar</button>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                         <div v-if="tareaEnEdicion">
@@ -25,23 +29,27 @@
                                 <button @click="cancelarEdicionTarea">Cancelar</button>
                             </form>
                         </div>
-                        <div>
-                            <h3>Agregar Nueva Tarea</h3>
-                            <form @submit.prevent="agregarNuevaTarea">
-                                <label>Nombre: <input v-model="nuevaTarea.Nombre" /></label><br>
-                                <label>Descripción: <input v-model="nuevaTarea.Descripcion" /></label><br>
-                                <label>Puntaje: <input type="number" v-model="nuevaTarea.Puntaje" /></label><br>
-                                <button type="submit">Agregar</button>
-                            </form>
-                        </div>
+                    </div>
+                    <div>
+                        <h3>Agregar Nueva Tarea</h3>
+                        <form @submit.prevent="agregarNuevaTarea">
+                            <label>Nombre: <input v-model="nuevaTarea.Nombre" /></label><br>
+                            <label>Descripción: <input v-model="nuevaTarea.Descripcion" /></label><br>
+                            <label>Puntaje: <input type="number" v-model="nuevaTarea.Puntaje" /></label><br>
+                            <button type="submit">Agregar</button>
+                        </form>
                     </div>
                     <div>
                         <h3>Canjes:</h3>
                         <ul>
                             <li v-for="canje in grupo.Canjes" :key="canje.ID">
-                                {{ canje.Nombre }} - {{ canje.Descripcion }} - Puntaje Requerido: {{ canje.PuntajeRequerido }}
-                                <button @click="iniciarEdicionCanje(canje)">Editar</button>
-                                <button @click="eliminarCanje(canje.ID)">Eliminar</button>
+                                <div>
+                                    <span>{{ canje.Nombre }} - {{ canje.Descripcion }} - Puntaje Requerido: {{ canje.PuntajeRequerido }}</span>
+                                    <div class="buttons">
+                                        <button @click="iniciarEdicionCanje(canje)">Editar</button>
+                                        <button @click="eliminarCanje(canje.ID)">Eliminar</button>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                         <div v-if="canjeEnEdicion">
@@ -54,21 +62,22 @@
                                 <button @click="cancelarEdicionCanje">Cancelar</button>
                             </form>
                         </div>
-                        <div>
-                            <h3>Agregar Nuevo Canje</h3>
-                            <form @submit.prevent="agregarNuevoCanje">
-                                <label>Nombre: <input v-model="nuevoCanje.Nombre" /></label><br>
-                                <label>Descripción: <input v-model="nuevoCanje.Descripcion" /></label><br>
-                                <label>Puntaje Requerido: <input type="number" v-model="nuevoCanje.PuntajeRequerido" /></label><br>
-                                <button type="submit">Agregar</button>
-                            </form>
-                        </div>
+                    </div>
+                    <div>
+                        <h3>Agregar Nuevo Canje</h3>
+                        <form @submit.prevent="agregarNuevoCanje">
+                            <label>Nombre: <input v-model="nuevoCanje.Nombre" /></label><br>
+                            <label>Descripción: <input v-model="nuevoCanje.Descripcion" /></label><br>
+                            <label>Puntaje Requerido: <input type="number" v-model="nuevoCanje.PuntajeRequerido" /></label><br>
+                            <button type="submit">Agregar</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -202,38 +211,117 @@ export default {
 <style scoped>
 .container {
     display: flex;
+    flex-wrap: wrap;
+    background-color: #f3f4f6;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
 }
 
 .tareas-canjes-admin {
     flex: 1;
     padding: 20px;
     margin-left: 220px; /* Ajuste para evitar superposición con la barra lateral */
+    background-color: #fdfdfd;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 .tareas-canjes-admin-box {
-    border: 1px solid #ccc;
+    border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 20px;
+    background-color: #f5f5f5;
 }
 
 .welcome-text {
-    background-color: orange;
-    padding: 10px;
+    background-color: #ff9800;
+    color: #fff;
+    padding: 15px;
     border-radius: 5px;
     text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
 }
 
 .center-text {
     text-align: center;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    color: #555;
 }
 
 .content {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .content > div {
-    width: 48%;
+    flex: 1;
+    background-color: #fff8e1;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.content h3 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #ff9800;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+li .buttons {
+    margin-top: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #ff9800;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #e68900;
 }
 
 @media (max-width: 768px) {
