@@ -12,18 +12,28 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
-```sh
-npm install
-```
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-### Compile and Hot-Reload for Development
+2. **Start JSON Server:**
+   - Ensure you have [JSON Server](https://www.npmjs.com/package/json-server) installed globally:
+     ```sh
+     npm install -g json-server
+     ```
+   - Start the JSON Server using the provided JSON file:
+     ```sh
+     json-server --watch public/datos_avance2.json
+     ```
 
-```sh
-npm run dev
-```
+3. **Compile and Hot-Reload for Development:**
+   ```sh
+   npm run dev
+   ```
 
-### Compile and Minify for Production
+4. **Compile and Minify for Production:**
+   ```sh
+   npm run build
+   ```
 
-```sh
-npm run build
-```
