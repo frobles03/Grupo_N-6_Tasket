@@ -54,10 +54,10 @@
 <script>
 export default {
   methods: {
-    login() {
+    login() { // Método para redirigir a la página de inicio de sesión
       this.$router.push('/login');
     },
-    logout() {
+    logout() { // Método para redirigir a la página de inicio
       this.$router.push('/');
 
     }

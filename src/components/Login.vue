@@ -20,15 +20,15 @@
 import Sidebar from './Sidebar.vue'
 import '@/assets/global.css';
 
-export default {
+export default { // Exporta un componente Vue llamado 'Login'
 name: 'Login',
-components: {
+components: { // Declara el componente Sidebar dentro de este componente
   Sidebar
 },
-data() {
+data() { // Devuelve un objeto con los datos iniciales del componente
   return {
-    email: '',
-    password: ''
+    email: '', // Inicializa email como una cadena vacía
+    password: '' // Inicializa password como una cadena vacía
   }
 },
 methods: {

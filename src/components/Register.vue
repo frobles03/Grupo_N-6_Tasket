@@ -35,17 +35,17 @@ export default {
   components: {
     Sidebar
   },
-  data() {
+  data() { // Devuelve un objeto con los datos iniciales del componente
     return {
-      fullName: '',
-      email: '',
+      fullName: '', // Inicializa fullName como una cadena vacía
+      email: '', // Inicializa email como una cadena vacía 
       password: '',
       confirmPassword: '',
       birthDate: '',
       gender: ''
     }
   },
-  methods: {
+  methods: { 
     register() {
       // Verificar que las contraseñas sean iguales
       if (this.password !== this.confirmPassword) {

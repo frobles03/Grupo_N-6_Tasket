@@ -35,17 +35,17 @@
 import { useRouter } from 'vue-router';
 import '@/assets/global.css';
 
-export default {
+export default { // Exporta un componente Vue llamado 'NavBar'
  name: 'NavBar',
  setup() {
-   const router = useRouter();
+   const router = useRouter();// Importa la función useRouter de vue-router
 
-   const redirectTo = (routeName) => {
+   const redirectTo = (routeName) => { // Define la función redirectTo
      router.push(`/${routeName}`);
    };
 
    return {
-     redirectTo
+     redirectTo // Devuelve la función redirectTo
    };
  }
 }

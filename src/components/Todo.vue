@@ -3,9 +3,7 @@
     <Sidebar/>
 
     <div class="content">
-      <nav>
-        <h4>Tasket un lugar para organizar tus cosas.. o algo asi  </h4>
-      </nav>
+     
 
       <div class="boards-container">
         <button @click="createNewBoard">Añadir una lista</button>
@@ -18,11 +16,12 @@
             </div>
             <div class="input">
               <label for="new-item-{{board.id}}">
-                <input id="new-item-{{board.id}}" v-model="board.newItemText" @keydown.enter="handleNewItem(board)" autocomplete="off" />
+              <!-- Añade un campo de entrada para añadir una nueva tarea --> 
+                <input id="new-item-{{board.id}}" v-model="board.newItemText" @keydown.enter="handleNewItem(board)" autocomplete="off" /> 
               </label>
             </div>
             <ul>
-              <li v-for="item in board.items" :key="item.id">
+              <li v-for="item in board.items" :key="item.id"> <!-- Itera sobre las tareas del tablero-->
                 <div class="task-header">
                   <label for="task-title-{{item.id}}">
                     <span @click="renameTask(item)">{{ item.title }}</span>
@@ -43,19 +42,19 @@ import { ref, reactive } from "vue";
 import Sidebar from './Sidebar.vue';
 import '@/assets/global.css';
 
-let boards = reactive([
+let boards = reactive([ // Inicializa un arreglo de tableros
   {
-    id: generateId(),
+    id: generateId(),// Genera un identificador único
     name: "board-1",
     items: [{ id: generateId(), title: "Hola a todos" }],
     newItemText: "", 
   },
 ]);
 
-function handleNewItem(board) {
-  const text = board.newItemText.trim();
+function handleNewItem(board) { // Función para añadir una nueva tarea
+  const text = board.newItemText.trim(); // Elimina los espacios en blanco al principio y al final
   if (text !== "") {
-    board.items.push({ id: generateId(), title: text });
+    board.items.push({ id: generateId(), title: text });// Añade una nueva tarea al tablero
     board.newItemText = "";
   }
 }

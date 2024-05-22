@@ -62,7 +62,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped> /**Estilos CSS que se aplican solo a este componente */
 .container {
   display: flex;
 }
