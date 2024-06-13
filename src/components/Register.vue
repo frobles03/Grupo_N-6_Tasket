@@ -1,7 +1,7 @@
 <template>
   <Sidebar/>
   <div class="register">
-    <h2>Registrarse</h2> <br><br><br>
+    <h2>Registrarse</h2> <br>
     <form @submit="register">
       <label for="fullName">Nombre completo:</label>
       <input type="text" id="fullName" v-model="fullName" required>
@@ -10,6 +10,9 @@
       <label for="password">Contraseña:</label>
       <input type="password" id="password" v-model="password" required>
       <label for="confirmPassword">Confirmar contraseña:</label>
+      <input type="password" id="confirmPassword" v-model="confirmPassword" required>
+      <label for="alias">Alias:</label>
+      <input type="text" id="alias" v-model="alias" required>
       <input type="password" id="confirmPassword" v-model="confirmPassword" required>
       <label for="birthDate">Fecha de nacimiento:</label>
       <input type="date" id="birthDate" v-model="birthDate" required>

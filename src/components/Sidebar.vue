@@ -14,7 +14,8 @@
           <li style="color: white; margin-right: 5px;"><font-awesome-icon icon="cog" style="color: white; margin-right: 5px;" />Configuración</li>
         </ul>
         
-        <h2 class="center-text"  style="color: white" >Grupos</h2>
+    <div> 
+      <h2 class="center-text"  style="color: white" >Grupos</h2>
     <nav>
       <ul class="scrollable-list"  style="color: white" >
         <li>Personal</li>
@@ -40,15 +41,22 @@
 
       </ul>
         </nav>
+<br>
+        <button class="create-group-button">Crear grupo</button>
+        
+    </div>
       </nav>
     </main>
 
  <footer class="footer-content">
-    <button @click="login">Iniciar sesión</button>
-    <br>
-    <button @click="logout">Cerrar sesión</button>
-  </footer>
+  <button class="login-button" @click="login">Iniciar sesión</button>
+   
+  <button class="logout-button" @click="logout">Cerrar sesión</button>
+</footer>
+  <br>
   </div>
+
+  
 </template>
 
 <script>
@@ -64,6 +72,8 @@ export default {
   }
 }
 </script>
+
+
 <style scoped>
 .sidebar {
   border: 3px solid #AF3800;
@@ -78,6 +88,12 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   border-radius: 15px;
+}
+.create-group-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
 }
 
 @media (max-width: 768px) {
@@ -97,11 +113,31 @@ ul.large-list {
   font-size: 1.2em;
 }
 
+
+
 .footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  
+  width: 80%; /* Asegura que el pie de página ocupe todo el ancho del sidebar */
+  box-sizing: border-box; /* Asegura que el padding y el borde no aumenten el ancho total del pie de página */
+  border-radius: 15px;
+  margin: auto; /* Centra el contenido del pie de página */
+  display: flex; /* Añade flexbox al pie de página */
+  flex-direction: column; /* Alinea los elementos en una columna */
+  align-items: center; /* Centra los elementos en la línea transversal */
+}
+
+.login-button {
+  /* Estilos para el botón de inicio de sesión */
+  background-color: #e48200; /* Cambia el color de fondo de los botones a marrón oscuro */
+  color: #ffffff; /* Cambia el color de la letra de los botones a blanco */
+  margin: 5px 0; /* Añade un margen arriba y abajo de cada botón */
+}
+
+.logout-button {
+  /* Estilos para el botón de cierre de sesión */
+  background-color: #530000; /* Cambia el color de fondo de los botones a marrón oscuro */
+  color: #ffffff; /* Cambia el color de la letra de los botones a blanco */
+  margin: 5px 0; /* Añade un margen arriba y abajo de cada botón */
 }
 
 .center-text {
