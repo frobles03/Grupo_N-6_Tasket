@@ -1,7 +1,7 @@
 <template>
   <Sidebar/>
   <div class="register">
-    <h2>Registrarse</h2>
+    <h2>Registrarse</h2> <br><br><br>
     <form @submit="register">
       <label for="fullName">Nombre completo:</label>
       <input type="text" id="fullName" v-model="fullName" required>
@@ -19,13 +19,15 @@
         <option>Masculino</option>
         <option>Femenino</option>
         <option>Otro</option>
-      </select> 
-      <br>
+      </select>
       <button type="submit">Registrarse</button>
     </form>
+    <div>
    
+    </div>
   </div>
 </template>
+
 <script>
 import Sidebar from './Sidebar.vue'
 import '@/assets/global.css';
@@ -35,93 +37,102 @@ export default {
   components: {
     Sidebar
   },
-  data() { // Devuelve un objeto con los datos iniciales del componente
+  data() {
     return {
-      fullName: '', // Inicializa fullName como una cadena vacía
-      email: '', // Inicializa email como una cadena vacía 
+      fullName: '',
+      email: '',
       password: '',
       confirmPassword: '',
       birthDate: '',
       gender: ''
     }
   },
-  methods: { 
+  methods: {
     register() {
-      // Verificar que las contraseñas sean iguales
-      if (this.password !== this.confirmPassword) {
-        alert('Las contraseñas no coinciden. Por favor, verifica e intenta de nuevo.');
-        return;
-      }
-
-      // Validar la fecha de nacimiento
-      const year = new Date(this.birthDate).getFullYear();
-      if (isNaN(year) || year.toString().length !== 4) {
-        alert('Por favor, introduce un año válido con 4 dígitos en la fecha de nacimiento.');
-        return;
-      }
-
       console.log('Registrarse');
     }
   }
 }
 </script>
 
-  <style scoped>
+<style scoped>
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  min-height: 80vh; /* Cambia 'height' a 'min-height' */
+  margin: auto auto auto 350px;
+  background-color: #FFB877;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
   .register {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin-left: 250px;
-    background-color: #f2f2f2;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-  }
-  
-  .register h2 {
-    margin-bottom: 20px;
-  }
-  
-  .register form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .register form label {
-    margin-bottom: 5px;
-  }
-  
-  .register form input {
-    margin-bottom: 15px;
+    margin-left: 0;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
   }
-  
-  .register form button {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .register form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .register a {
-    color: #007BFF;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-  }
-  
-  .register a:hover {
-    text-decoration: underline;
-  }
-  </style>
+}
+
+.register form button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #AF3800 !important; /* Añade !important para asegurarte de que este estilo se aplique */
+  color: white;
+  cursor: pointer;
+}
+
+.register form button:hover {
+  background-color: #8C2E00 !important; /* Añade !important para asegurarte de que este estilo se aplique */
+}
+
+
+.register h2 {
+  margin-bottom: 20px;
+}
+
+.register form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.register form label {
+  margin-bottom: 5px;
+}
+
+.register form input, .register form select {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.register form button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+}
+
+.register form button:hover {
+  background-color: #0056b3;
+}
+
+.register a {
+  color: #007BFF;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+</style>
