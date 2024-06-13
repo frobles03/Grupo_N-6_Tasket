@@ -1,18 +1,19 @@
 <template> 
-
+<Sidebar/>
     <div class="titulo">
      <h2>Tienda de canje</h2>
+
+     <ContenedorCanjes></ContenedorCanjes>
     </div>
-     
-    <ContenedorCanjes></ContenedorCanjes>
-    <ContenedorCanjes></ContenedorCanjes>
-    <ContenedorCanjes></ContenedorCanjes>
     
  
  </template>
  
  <script setup>
  import ContenedorCanjes from './ContenedorCanjes.vue'
+ import Sidebar from './Sidebar.vue'
+ import '@/assets/global.css';
+
  
  </script>
  
@@ -24,6 +25,10 @@
      color: black;
      padding: 8px;
      border-radius: 10px;
+     margin-left: 250px;
+     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+     text-align: center
+
  }
  
  </style>

@@ -1,137 +1,190 @@
 <template>
-  <MiNavBar />
+  <div class="container">
+    <Sidebar/> <!-- se llama al componente Sidebar -->
 
-  <div class="content">
-    <nav>
-      <h3>instrucciones:</h3>
-      <h4>Si desea modificar el nombre de una tarea o de la lista de quehaceres, haga clic en ella. Seguido de esto
-        aparecerá un evento "Dom" para modificar el texto seleccionado.</h4>
-      <h4>para agreagar una tarea a la listassassaasasa deve escribir en el recuadro blanco y luego precionar la tacla "Enter"
-      </h4>
-    </nav>
-
-    <div class="boards-container">
-      <a href="#" @click="createNewBoard">Añadir una lista</a>
-      <div class="boards">
-        <div class="board" v-for="board in boards" :key="board.id">
-          <div class="board-header">
-            <span @click="renameBoard(board)">{{ board.name }}</span>
-          </div>
-          <div class="input">
-            <input v-model="board.newItemText" @keydown.enter="handleNewItem(board)" />
-          </div>
-          <div class="item drag-el" v-for="item in board.items" :key="item.id">
-            <div class="task-header">
-              <span @click="renameTask(item)">{{ item.title }}</span>
-              <button @click="removeTask(board, item)">Eliminar</button>
+    <div class="content">
+      <nav>
+        <h1 class="centered-text">"Tasket: Simplifica tus tareas, encesta tus objetivos" </h1> 
+        <div class="boards">
+          <div class="board" v-for="board in boards" :key="board.id" :class="{ minimized: board.isMinimized }"> <!-- tablero individual con iteracion de sobre los arreglos -->
+            <div class="board-header" @click="toggleBoard(board.id)">
+              <label :for="'board-name-' + board.id">
+                <span>{{ board.name }}</span> <!-- Nombre del tablero -->
+              </label>
+              <span class="toggle-button">{{ board.isMinimized ? '▶' : '▼' }}</span> <!-- Botón de minimizar -->
             </div>
+            <ul v-show="!board.isMinimized">
+              <li v-for="item in board.items" :key="item.id">
+                <div class="task-header" @click="openModal(item)">
+                  <label :for="'task-title-' + item.id">
+                    <span>{{ item.title }}</span> <!-- Título de la tarea -->
+                  </label>
+                </div>
+              </li>
+              <li v-if="!board.items.length">
+                <div class="empty-list-message">No hay tareas asignadas</div> <!-- Mensaje si la lista esta vacía -->
+              </li>
+            </ul>
           </div>
         </div>
+      </nav>
+    </div>
+
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" @click="showModal = false">&times;</span> <!-- Botón de cerrar -->
+        <h2>{{ selectedItem.title }}</h2> <!-- Título del elemento seleccionado -->
+        <p>{{ selectedItem.description }}</p> <!-- Descripción del elemento seleccionado -->
+        <p>Puntos: {{ selectedItem.points }}</p> <!-- Puntos del elemento seleccionado -->
       </div>
     </div>
   </div>
- 
 </template>
 
-<script setup>
-import { ref, reactive } from "vue";
-import { useRouter } from 'vue-router';
-import MiNavBar from './navBar.vue'
+<script>
+import Sidebar from './Sidebar.vue'; // Importa el componente Sidebar
 
-const boards = reactive([
-  {
-    id: "1",
-    name: "Personal",
-    newItemText: "",
-    items: [{ id: "1", title: "primera tarea" }],
+export default {
+  components: {
+    Sidebar // Declara el componente Sidebar dentro de este componente
   },
-  {
-    id: "2",
-    name: "tablero 2",
-    newItemText: "",
-    items: [{ id: "1", title: "primera tarea" }],
-  }
-]);
-
-function handleNewItem(board) {
-  const text = board.newItemText.trim();
-  if (text !== "") {
-    board.items.push({ id: Math.random().toString(36).substr(2, 9), title: text });
-    board.newItemText = "";
-  }
-}
-
-function createNewBoard() {
-  const name = prompt("nombre del tablero");
-  if (name) {
-    const board = {
-      id: Math.random().toString(36).substr(2, 9),
-      name: name,
-      newItemText: "",
-      items: [],
+  data() {
+    return {
+      boards: [], // Inicializa boards como un arreglo vacío
+      showModal: false, // Inicializa showModal como false
+      selectedItem: {} // Inicializa selectedItem como un objeto vacío
     };
-    boards.push(board);
+  },
+  methods: {
+    toggleBoard(id) {
+      // Lógica para minimizar o maximizar el tablero con el id dado
+    },
+    openModal(item) {
+      this.selectedItem = item; // Establece el elemento seleccionado
+      this.showModal = true; // Muestra el modal
+    }
   }
-}
-
-function renameBoard(board) {
-  const newName = prompt("Escriba el nuevo nombre del tablero", board.name);
-  if (newName && newName !== board.name) {
-    board.name = newName;
-  }
-}
-
-function renameTask(task) {
-  const newName = prompt("Escriba el nuevo nombre de la tarea", task.title);
-  if (newName && newName !== task.title) {
-    task.title = newName;
-  }
-}
-
-function removeTask(board, task) {
-  const index = board.items.indexOf(task);
-  if (index !== -1) {
-    board.items.splice(index, 1);
-  }
-}
-
-const router = useRouter();
-
-const redirectToLogin = () => {
-  router.push('/login');
-};
-const redirectToProfile = () => {
-  router.push('/profile');
 };
 </script>
 
+
+
+
+<script setup>
+import { ref, reactive } from "vue";
+import Sidebar from './Sidebar.vue'; 
+import datosHome from './datosHome.js'; 
+import '@/assets/global.css'; 
+//gestio de estado 
+let boards = reactive(datosHome); // Asignar datos a la variable boards de manera reactiva
+let showModal = ref(false); // controla si se debe mostrar (o no ) la interfaz de usuario  p
+let selectedItem = reactive({}); // Objeto del elemento seleccionado
+
+function openModal(item) {
+  selectedItem = item; // Establecer el elemento seleccionado
+  showModal.value = true; // Mostrar el modal
+}
+
+function toggleBoard(boardId) {
+  const board = boards.find(b => b.id === boardId); // Encontrar el tablero con el ID dado
+  if (board) {
+    board.isMinimized = !board.isMinimized; // Alternar el estado minimizado del tablero
+  }
+}
+
+</script>
+
 <style scoped>
+.centered-text {
+  text-align: center;
+}
+
+.empty-list-message {
+  color: red;
+  text-align: center;
+}
 .boards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: 10px;
+}.board {
+  background: #EF9E5F;
+  padding: 15px;
+  flex: 1 0 200px;
+  transition: height 0.3s ease;
+  border-radius: 10%;
 }
 
-.board {
-  border: 1px solid #ccc;
-  padding: 20px;
-  background-color: #f5f5f5;
-  margin: 20px;
-  border-radius: 5px;
+.board ul {
+  height: 200px; /* Establecer la altura predeterminada */
+  max-height: 400px; /* Ajustar este valor según tus necesidades */
+  overflow-y: auto; /* Agregar una barra de desplazamiento cuando el contenido exceda la altura máxima */
 }
 
+.board.minimized {
+  height:10px; /* Reducir el tamaño del cuadro minimizado */
+}
+
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.toggle-button {
+  font-size: 1.2em; /* Reduce el tamaño de la flecha */
+  cursor: pointer;
+  position: relative;
+  top: -0.1em; /* Mueve la flecha un poco hacia arriba */
+}
 .content {
-  flex-grow: 1;
-  overflow: auto;
-  margin-left: 270px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  padding-left: 250px;
 }
 
+.task-header {
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  position: relative; /* Añade esta línea */
+  background-color: #FFDAB9;
+  margin: 15% auto;
+  padding: 20px;
+  border: 5px solid #888;
+  width: 80%;
+  border-radius: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+/* Media queries para hacer que el diseño sea responsivo */
 @media (max-width: 768px) {
   .content {
-    margin-left: 100px;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .board {
+    flex: 1 0 100%; /* En pantallas pequeñas, las tarjetas ocuparán todo el ancho */
   }
 }
 </style>
