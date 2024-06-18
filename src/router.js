@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Perfil from './components/Perfil.vue'
 import TareasCanjesAdmin from './components/TareasCanjesAdmin.vue'
-import Todo from './components/Todo.vue'
 import Login from './components/Login.vue'
 import Register from './components/Register.vue'
 import TiendaCanje from './components/TiendaCanje.vue'

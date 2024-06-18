@@ -1,5 +1,5 @@
 <script setup>
-import Todo from "./components/Todo.vue";
+import Todo from "./components/home.vue";
 import Perfil from './components/Perfil.vue'
 
 </script>
