@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Sidebar from './Sidebar.vue'
+import Sidebar from '../common/Sidebar.vue'
 import '@/assets/global.css';
 
 export default { // Exporta un componente Vue llamado 'Login'

@@ -10,8 +10,8 @@
  </template>
  
  <script setup>
- import ContenedorCanjes from './ContenedorCanjes.vue'
- import Sidebar from './Sidebar.vue'
+import ContenedorCanjes from '../trading/ContenedorCanjes.vue'
+import Sidebar from '../common/Sidebar.vue'
  import '@/assets/global.css';
 
  

@@ -1,7 +1,6 @@
 <script setup>
 import Todo from "./components/home.vue";
-import Perfil from './components/Perfil.vue'
-
+import Perfil from './components/user/Perfil.vue';;
 </script>
 
 <template>
