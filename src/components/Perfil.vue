@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import Sidebar from '../common/Sidebar.vue';
+import Sidebar from './Sidebar.vue';
 import '@/assets/global.css';
 
 export default {

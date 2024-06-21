@@ -100,7 +100,7 @@
 
 <script>
 import axios from 'axios';
-import Sidebar from '../common/Sidebar.vue'
+import Sidebar from './Sidebar.vue';
 import '@/assets/global.css';
 
 export default {

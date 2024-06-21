@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Perfil from './components/user/Perfil.vue'
-import TareasCanjesAdmin from './components/admin/TareasCanjesAdmin.vue'
-import Login from './components/auth/Login.vue'
-import Register from './components/auth/Register.vue'
-import TiendaCanje from './components/user/TiendaCanje.vue'
+import Perfil from './components/Perfil.vue'
+import TareasCanjesAdmin from './components/TareasCanjesAdmin.vue'
+import Login from './components/Login.vue'
+import Register from './components/Register.vue'
+import TiendaCanje from './components/TiendaCanje.vue'
 import Home from './components/home.vue';
+
 
 const routes = [
   { path: '/', component: Home },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/tareas-canjes-admin', component: TareasCanjesAdmin },
   { path: '/register', component: Register },
   { path: '/TiendaCanje', component: TiendaCanje },
+
 ]
 
 const router = createRouter({

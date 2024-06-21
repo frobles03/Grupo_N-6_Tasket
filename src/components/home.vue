@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Sidebar from './common/Sidebar.vue'; // Importa el componente Sidebar
+import Sidebar from './Sidebar.vue'; // Importa el componente Sidebar
 
 export default {
   components: {
@@ -72,8 +72,8 @@ export default {
 
 <script setup>
 import { ref, reactive } from "vue";
-import Sidebar from './common/Sidebar.vue'; 
-import datosHome from './utils/datosHome.js'; 
+import Sidebar from './Sidebar.vue'; 
+import datosHome from './datosHome.js'; 
 import '@/assets/global.css'; 
 //gestio de estado 
 let boards = reactive(datosHome); // Asignar datos a la variable boards de manera reactiva
