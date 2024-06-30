@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "canjes")
 public class Canje {
@@ -32,6 +31,12 @@ public class Canje {
 
     public Canje(Long id, int puntos, String titulo, String descripcion) {
         this.id = id;
+        this.puntos = puntos;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+    }
+
+    public Canje(int puntos, String titulo, String descripcion) {
         this.puntos = puntos;
         this.titulo = titulo;
         this.descripcion = descripcion;

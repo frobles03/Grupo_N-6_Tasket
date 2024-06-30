@@ -59,7 +59,7 @@
         <optional>true</optional>
     </dependency>
     <dependency>
-        <groupId>org.projectlombok</groupId>
+        <groupId>org.project.lombok</groupId>
         <artifactId>lombok</artifactId>
         <optional>true</optional>
     </dependency>
@@ -79,7 +79,7 @@
 				<configuration>
 					<excludes>
 						<exclude>
-							<groupId>org.projectlombok</groupId>
+							<groupId>org.project.lombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
