@@ -1,10 +1,12 @@
 package com.example.backend.repositorio;
 
+import com.example.backend.models.Usuario;
+
+import lombok.Getter;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.example.backend.entidad.Usuario;
 
 @Repository
-public interface usuariosRepositorio extends JpaRepository<Usuario, Long>{
-    
+public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 }

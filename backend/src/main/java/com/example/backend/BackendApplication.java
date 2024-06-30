@@ -5,8 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.backend.entidad.Usuario;
-import com.example.backend.repositorio.usuariosRepositorio;
+import com.example.backend.models.Usuario;
+import com.example.backend.repositorio.UsuarioRepositorio; // Corrected the import statement
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
@@ -16,11 +16,10 @@ public class BackendApplication implements CommandLineRunner {
     }
 
     @Autowired
-    private usuariosRepositorio repositorio;
+    private UsuarioRepositorio repositorio; // Corrected the field type to match the corrected import
 
     @Override
     public void run(String... args) throws Exception {
-        Usuario usuario1 = new Usuario("Fernando", "Robles", "f.robles03@ufromail.cl");
-        repositorio.save(usuario1);
+   
     }
-} 
+}

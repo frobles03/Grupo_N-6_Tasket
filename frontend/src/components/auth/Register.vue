@@ -65,63 +65,77 @@ export default {
   }
 }
 </script>
+<style scoped>
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%; /* Ajusta el ancho al mismo que .login */
+  height: 80vh;
+  margin: auto auto auto 350px; /* Ajusta el margen para alinear con .login */
+  background-color: #FFB877; /* Color de fondo igual que .login */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
 
-  <style scoped>
+/* Añade estilos para h2, form, label, input, button, y a, basándote en .login */
+.register h2 {
+  margin-bottom: 20px;
+}
+
+.register form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.register form label {
+  margin-bottom: 5px;
+}
+
+.register form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.register form button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+}
+
+.register form button:hover {
+  background-color: #0056b3;
+}
+
+.register a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+.register a {
+  color: #007BFF;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+/* Añade la consulta de medios para responsividad */
+@media (max-width: 768px) {
   .register {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin-left: 250px;
-    background-color: #f2f2f2;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    margin-left: 0; /* Ajusta para pantallas pequeñas */
+    padding: 10px; /* Reduce el padding en pantallas pequeñas */
   }
-  
-  .register h2 {
-    margin-bottom: 20px;
-  }
-  
-  .register form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .register form label {
-    margin-bottom: 5px;
-  }
-  
-  .register form input {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .register form button {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .register form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .register a {
-    color: #007BFF;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-  }
-  
-  .register a:hover {
-    text-decoration: underline;
-  }
-  </style>
+}
+</style>

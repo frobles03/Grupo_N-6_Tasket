@@ -2,7 +2,7 @@ package com.example.backend.servicio;
 
 import java.util.List;
 
-import com.example.backend.entidad.Usuario;
+import com.example.backend.models.Usuario;
 
 public interface usuariosServicio {
   

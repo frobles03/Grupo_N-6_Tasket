@@ -59,9 +59,10 @@
         <optional>true</optional>
     </dependency>
     <dependency>
-        <groupId>org.project.lombok</groupId>
+        <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <optional>true</optional>
+        <version>1.18.22</version> <!-- Asegúrate de usar la última versión disponible o la que necesites -->
+        <scope>provided</scope>
     </dependency>
     <dependency>
         <groupId>org.springframework.boot</groupId>

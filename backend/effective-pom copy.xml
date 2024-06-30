@@ -7935,8 +7935,9 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.22</version>
-      <scope>provided</scope>
+      <version>1.18.32</version>
+      <scope>compile</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -8324,7 +8325,7 @@
             <configuration>
               <excludes>
                 <exclude>
-                  <groupId>org.project.lombok</groupId>
+                  <groupId>org.projectlombok</groupId>
                   <artifactId>lombok</artifactId>
                 </exclude>
               </excludes>
@@ -8335,7 +8336,7 @@
         <configuration>
           <excludes>
             <exclude>
-              <groupId>org.project.lombok</groupId>
+              <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
             </exclude>
           </excludes>

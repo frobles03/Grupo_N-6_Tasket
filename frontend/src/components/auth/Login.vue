@@ -13,36 +13,57 @@
       <br><a href="#" @click.prevent="forgotPassword">¿Olvidaste tu contraseña?</a> <br>
       <router-link to="/register">Registrarse</router-link>
     </div>
-  </div>
-</template>
 
+
+    <div>
+      <h2>Usuarios:</h2>
+      <ul>
+        <li v-for="user in users" :key="user.id">{{ user.nombreCompleto }}</li>
+      </ul>
+    </div>
+  </div>
+
+
+</template>
 <script>
-import Sidebar from '../common/Sidebar.vue'
+import axios from 'axios';
+import Sidebar from '../common/Sidebar.vue';
 import '@/assets/global.css';
 
-export default { // Exporta un componente Vue llamado 'Login'
-name: 'Login',
-components: { // Declara el componente Sidebar dentro de este componente
-  Sidebar
-},
-data() { // Devuelve un objeto con los datos iniciales del componente
-  return {
-    email: '', // Inicializa email como una cadena vacía
-    password: '' // Inicializa password como una cadena vacía
-  }
-},
-methods: {
-  login() {
-    console.log('Iniciar sesión');
+export default {
+  name: 'Login',
+  components: {
+    Sidebar
   },
-  forgotPassword() {
-    window.alert('¡Qué pena! :(');
+  data() {
+    return {
+      email: '',
+      password: '',
+      users: [] // Añade esto para almacenar los usuarios
+    }
+  },
+  mounted() {
+    this.fetchUsers(); // Llama a fetchUsers cuando el componente se monte
+  },
+  methods: {
+    login() {
+      console.log('Iniciar sesión');
+    },
+    forgotPassword() {
+      window.alert('¡Qué pena! :(');
+    },
+    fetchUsers() {
+      axios.get('http://localhost:8090/usuarios') // Asegúrate de usar tu URL correcta
+        .then(response => {
+          this.users = response.data; // Almacena los usuarios en la propiedad users
+        })
+        .catch(error => {
+          console.error('Hubo un error al obtener los usuarios:', error);
+        });
+    }
   }
-}
 }
 </script>
-
-
 <style scoped>
 .login {
   display: flex;

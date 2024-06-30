@@ -23,6 +23,7 @@
               </li>
               <li v-if="!board.items.length">
                 <div class="empty-list-message">No hay tareas asignadas</div> <!-- Mensaje si la lista esta vacía -->
+                                   
               </li>
             </ul>
           </div>
