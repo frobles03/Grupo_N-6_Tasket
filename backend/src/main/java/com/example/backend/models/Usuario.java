@@ -1,5 +1,4 @@
 package com.example.backend.models;
-
 import jakarta.persistence.*;
 
 @Entity

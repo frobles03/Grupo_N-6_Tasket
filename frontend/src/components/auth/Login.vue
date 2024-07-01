@@ -14,17 +14,21 @@
       <router-link to="/register">Registrarse</router-link>
     </div>
 
-
-    <div>
+    <!-- Lista de usuarios -->
+    <div v-if="users && users.length > 0">
       <h2>Usuarios:</h2>
       <ul>
-        <li v-for="user in users" :key="user.id">{{ user.nombreCompleto }}</li>
+        <li v-for="user in users" :key="user.id">
+          {{ user.nombre }} - {{ user.email }}
+        </li>
       </ul>
     </div>
+    <div v-else>
+      <p>No se encontraron usuarios.</p>
+    </div>
   </div>
-
-
 </template>
+
 <script>
 import axios from 'axios';
 import Sidebar from '../common/Sidebar.vue';
@@ -64,6 +68,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .login {
   display: flex;
