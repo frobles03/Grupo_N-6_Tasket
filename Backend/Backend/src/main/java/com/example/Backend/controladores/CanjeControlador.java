@@ -70,8 +70,8 @@ public class CanjeControlador {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateCanje(@RequestBody Canje canjeToUpdate) throws Exception{
+    @PutMapping("/{canjeId}")
+    public ResponseEntity<?> updateCanje(@PathVariable Long canjeId, @RequestBody Canje canjeToUpdate) throws Exception{
 
         try {
             return ResponseEntity.ok(canjeServicio.updateCanje(canjeToUpdate));
