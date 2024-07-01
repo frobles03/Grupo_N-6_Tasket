@@ -45,10 +45,10 @@
           <div>
             <h3>Canjes:</h3>
             <ul>
-              <li v-for="canje in grupo.Canjes" :key="canje.ID">
+              <li v-for="canje in Canjes" :key="canje.id">
                 <div>
-                  <span>{{ canje.Nombre }} - {{ canje.Descripcion }} - Puntaje Requerido: {{
-                    canje.PuntajeRequerido }}</span>
+                  <span>{{ canje.nombre }} - {{ canje.descripcion }} - Puntaje Requerido: {{
+                    canje.puntos }}</span>
                   <div class="buttons">
                     <button @click="iniciarEdicionCanje(canje)">Editar</button>
                     <button @click="confirmarEliminacion(() => eliminarCanje(canje.ID))">Eliminar</button>
@@ -70,10 +70,10 @@
           </div>
           <div>
             <h3>Agregar Nuevo Canje</h3>
-            <form @submit.prevent="agregarNuevoCanje">
-              <label>Nombre: <input v-model="nuevoCanje.Nombre" /></label><br />
-              <label>Descripción: <input v-model="nuevoCanje.Descripcion" /></label><br />
-              <label>Puntaje Requerido: <input type="number" v-model="nuevoCanje.PuntajeRequerido" /></label><br />
+            <form @submit.prevent="añadirCanje">
+              <label>Nombre: <input v-model="nombre" /></label><br />
+              <label>Descripción: <input v-model="descripcion" /></label><br />
+              <label>Puntaje Requerido: <input type="number" v-model="puntos" /></label><br />
               <button type="submit">Agregar</button>
             </form>
           </div>
@@ -110,6 +110,7 @@ export default {
   },
   data() {
     return {
+      Canjes: [],
       grupo: {
         Nombre: '',
         Tareas: [],
@@ -204,6 +205,13 @@ export default {
     cancelarEdicionCanje() {
       this.canjeEnEdicion = null;
     },
+    fetchCanjes(){
+    axios.get('http://localhost:8080/api/canjes')
+       .then(response => {
+        this.Canjes = response.data
+    })
+       .catch(error => console.error('Error:', error)) 
+    },
     async agregarNuevaTarea() {
       try {
         const nuevaTareaConID = { ...this.nuevaTarea, ID: Date.now() };
@@ -214,6 +222,18 @@ export default {
         console.error('Error al agregar nueva tarea:', error);
       }
     },
+    añadirCanje(){
+     const canjeData = { 
+      nombre: this.nombre,
+      descripcion: this.descripcion, 
+      puntos: this.puntos,};
+
+      axios.post('http://localhost:8080/api/canjes', canjeData)
+      .then((response) => {
+       console.log("Canje añadido:", response.data);
+       })
+      window.location.reload()
+      },
     async agregarNuevoCanje() {
       try {
         const nuevoCanjeConID = { ...this.nuevoCanje, ID: Date.now() };
@@ -231,7 +251,7 @@ export default {
     }
   },
   mounted() {
-    this.cargarDatos();
+    this.fetchCanjes();
   }
 };
 </script>
