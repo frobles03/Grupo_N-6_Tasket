@@ -43,7 +43,8 @@ export default {
     return {
       email: '',
       password: '',
-      users: [] // Añade esto para almacenar los usuarios
+      users: [], // Añade esto para almacenar los usuarios
+      isLoggedIn: false // Añade esto para controlar el estado de inicio de sesión
     }
   },
   mounted() {
@@ -51,7 +52,20 @@ export default {
   },
   methods: {
     login() {
-      console.log('Iniciar sesión');
+      axios.post('http://localhost:8090/usuarios', {
+        email: this.email,
+        password: this.password
+      })
+      .then(response => {
+        // Aquí deberías verificar la respuesta del servidor para confirmar el inicio de sesión
+        // Por ejemplo, si el servidor responde con un estado de éxito o un token
+        console.log('Inicio de sesión exitoso', response);
+        this.isLoggedIn = true; // Actualiza el estado a logueado
+      })
+      .catch(error => {
+        console.error('Error de inicio de sesión:', error);
+        alert('Error de inicio de sesión. Por favor, verifica tus credenciales.');
+      });
     },
     forgotPassword() {
       window.alert('¡Qué pena! :(');
