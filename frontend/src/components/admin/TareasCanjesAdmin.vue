@@ -45,35 +45,35 @@
           <div>
             <h3>Canjes:</h3>
             <ul>
-              <li v-for="canje in Canjes" :key="canje.id">
+              <li v-for="canje in grupo.Canjes" :key="canje.ID">
                 <div>
-                  <span>{{ canje.nombre }} - {{ canje.descripcion }} - Puntaje Requerido: {{
-                    canje.puntos }}</span>
+                  <span>{{ canje.Nombre }} - {{ canje.Descripcion }} - Puntaje Requerido: {{
+                    canje.PuntajeRequerido }}</span>
                   <div class="buttons">
-                    <button @click="editarCanje(canje)">Editar</button>
-                    <button @click="eliminacionCanje(canje.id)">Eliminar</button>
+                    <button @click="iniciarEdicionCanje(canje)">Editar</button>
+                    <button @click="confirmarEliminacion(() => eliminarCanje(canje.ID))">Eliminar</button>
                   </div>
                 </div>
               </li>
             </ul>
             <div v-if="canjeEnEdicion">
               <h3>Editar Canje</h3>
-              <form @submit.prevent="guardarCambios">
-                <label>Nombre: <input v-model="currentCanje.nombre" /></label><br />
-                <label>Descripción: <input v-model="currentCanje.descripcion" /></label><br />
+              <form @submit.prevent="guardarCanjeEditado">
+                <label>Nombre: <input v-model="canjeEnEdicion.Nombre" /></label><br />
+                <label>Descripción: <input v-model="canjeEnEdicion.Descripcion" /></label><br />
                 <label>Puntaje Requerido: <input type="number"
-                    v-model="currentCanje.puntos" /></label><br />
-                <button type="submit" @click="guardarCambios">Guardar</button>
+                    v-model="canjeEnEdicion.PuntajeRequerido" /></label><br />
+                <button type="submit">Guardar</button>
                 <button @click="cancelarEdicionCanje">Cancelar</button>
               </form>
             </div>
           </div>
           <div>
             <h3>Agregar Nuevo Canje</h3>
-            <form @submit.prevent="añadirCanje">
-              <label>Nombre: <input v-model="nombre" /></label><br />
-              <label>Descripción: <input v-model="descripcion" /></label><br />
-              <label>Puntaje Requerido: <input type="number" v-model="puntos" /></label><br />
+            <form @submit.prevent="agregarNuevoCanje">
+              <label>Nombre: <input v-model="nuevoCanje.Nombre" /></label><br />
+              <label>Descripción: <input v-model="nuevoCanje.Descripcion" /></label><br />
+              <label>Puntaje Requerido: <input type="number" v-model="nuevoCanje.PuntajeRequerido" /></label><br />
               <button type="submit">Agregar</button>
             </form>
           </div>
@@ -110,8 +110,6 @@ export default {
   },
   data() {
     return {
-      Canjes: [],
-      currentCanje: null,
       grupo: {
         Nombre: '',
         Tareas: [],
@@ -119,16 +117,16 @@ export default {
         Usuarios: []
       },
       tareaEnEdicion: null,
-      canjeEnEdicion: false,
+      canjeEnEdicion: null,
       nuevaTarea: {
         Nombre: '',
         Descripcion: '',
         Puntaje: 0
       },
       nuevoCanje: {
-        nombre: '',
-        descripcion: '',
-        puntos: 0
+        Nombre: '',
+        Descripcion: '',
+        PuntajeRequerido: 0
       }
     };
   },
@@ -146,13 +144,6 @@ export default {
         console.error('Error al cargar datos desde JSON Server:', error);
       }
     },
-    fetchCanjes(){
-                axios.get('http://localhost:8080/api/canjes')
-                .then(response => {
-                    this.Canjes = response.data
-                })
-                .catch(error => console.error('Error:', error)) 
-            },
     async guardarTareaEditada() {
       try {
         const tareaIndex = this.grupo.Tareas.findIndex(t => t.ID === this.tareaEnEdicion.ID);
@@ -164,13 +155,6 @@ export default {
         console.error('Error al guardar tarea editada:', error);
       }
       this.tareaEnEdicion = null;
-    },
-    guardarCambios(){
-    axios.put(`http://localhost:8080/api/canjes/${this.currentCanje.id}`, this.currentCanje)
-    .then(()=>{
-      this.canjeEnEdicion = false
-    window.location.reload()
-    })
     },
     async guardarCanjeEditado() {
       try {
@@ -200,12 +184,6 @@ export default {
         console.error('Error al eliminar canje:', error);
       }
     },
-    eliminacionCanje(id){
-    axios.delete(`http://localhost:8080/api/canjes/${id}`)
-    .then(()=> {
-    window.location.reload()
-    })
-    },
     async eliminarUsuario(id) {
       try {
         this.grupo.Usuarios = this.grupo.Usuarios.filter(u => u.ID !== id);
@@ -219,10 +197,6 @@ export default {
     },
     iniciarEdicionCanje(canje) {
       this.canjeEnEdicion = { ...canje };
-    },
-    editarCanje(canje){
-      this.currentCanje = canje
-      this.canjeEnEdicion = true
     },
     cancelarEdicionTarea() {
       this.tareaEnEdicion = null;
@@ -240,18 +214,6 @@ export default {
         console.error('Error al agregar nueva tarea:', error);
       }
     },
-    añadirCanje(){
-     const canjeData = { 
-      nombre: this.nombre,
-      descripcion: this.descripcion, 
-      puntos: this.puntos,};
-
-      axios.post('http://localhost:8080/api/canjes', canjeData)
-      .then((response) => {
-       console.log("Canje añadido:", response.data);
-       })
-      window.location.reload()
-      },
     async agregarNuevoCanje() {
       try {
         const nuevoCanjeConID = { ...this.nuevoCanje, ID: Date.now() };
@@ -269,7 +231,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchCanjes();
+    this.cargarDatos();
   }
 };
 </script>
