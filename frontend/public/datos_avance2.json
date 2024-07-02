@@ -50,13 +50,15 @@
           "ID": 2,
           "Nombre": "Usuario 2",
           "Apodo": "Apodo2",
-          "Correo": "usuario2@example.com"
+          "Correo": "usuario2@example.com",
+          "Rol": "usuario"
         },
         {
           "ID": 3,
           "Nombre": "Usuario 3",
           "Apodo": "Apodo3",
-          "Correo": "usuario3@example.com"
+          "Correo": "usuario3@example.com",
+          "Rol": "usuario"
         }
       ],
       "id": "b58f"
