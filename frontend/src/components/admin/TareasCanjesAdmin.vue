@@ -21,12 +21,12 @@
           <div>
             <h3>Tareas:</h3>
             <ul>
-              <li v-for="tarea in grupo.Tareas" :key="tarea.ID">
+              <li v-for="tarea in tareas" :key="tarea.id">
                 <div>
-                  <span>{{ tarea.Nombre }} - {{ tarea.Descripcion }} - Puntaje: {{ tarea.Puntaje }}</span>
+                  <span>{{ tarea.nombre }} - {{ tarea.descripcion }} - Puntaje: {{ tarea.puntaje }}</span>
                   <div class="buttons">
                     <button @click="iniciarEdicionTarea(tarea)">Editar</button>
-                    <button @click="confirmarEliminacion(() => eliminarTarea(tarea.ID))">Eliminar</button>
+                    <button @click="confirmarEliminacion(() => eliminarTarea(tarea.id))">Eliminar</button>
                   </div>
                 </div>
               </li>
@@ -34,9 +34,9 @@
             <div v-if="tareaEnEdicion">
               <h3>Editar Tarea</h3>
               <form @submit.prevent="guardarTareaEditada">
-                <label>Nombre: <input v-model="tareaEnEdicion.Nombre" /></label><br />
-                <label>Descripción: <input v-model="tareaEnEdicion.Descripcion" /></label><br />
-                <label>Puntaje: <input type="number" v-model="tareaEnEdicion.Puntaje" /></label><br />
+                <label>Nombre: <input v-model="tareaEnEdicion.nombre" /></label><br />
+                <label>Descripción: <input v-model="tareaEnEdicion.descripcion" /></label><br />
+                <label>Puntaje: <input type="number" v-model="tareaEnEdicion.puntaje" /></label><br />
                 <button type="submit">Guardar</button>
                 <button @click="cancelarEdicionTarea">Cancelar</button>
               </form>
@@ -45,9 +45,9 @@
           <div>
             <h3>Agregar Nueva Tarea</h3>
             <form @submit.prevent="agregarNuevaTarea">
-              <label>Nombre: <input v-model="nuevaTarea.Nombre" /></label><br />
-              <label>Descripción: <input v-model="nuevaTarea.Descripcion" /></label><br />
-              <label>Puntaje: <input type="number" v-model="nuevaTarea.Puntaje" /></label><br />
+              <label>Nombre: <input v-model="nuevaTarea.nombre" /></label><br />
+              <label>Descripción: <input v-model="nuevaTarea.descripcion" /></label><br />
+              <label>Puntaje: <input type="number" v-model="nuevaTarea.puntaje" /></label><br />
               <button type="submit">Agregar</button>
             </form>
           </div>
@@ -127,12 +127,13 @@ export default {
         Canjes: [],
         Usuarios: []
       },
+      tareas: [],
       tareaEnEdicion: null,
       canjeEnEdicion: false,
       nuevaTarea: {
-        Nombre: '',
-        Descripcion: '',
-        Puntaje: 0
+        nombre: '',
+        descripcion: '',
+        puntaje: 0
       },
       nuevoCanje: {
         nombre: '',
@@ -162,13 +163,17 @@ export default {
       })
       .catch(error => console.error('Error:', error));
     },
+    fetchTareas(){
+      axios.get('http://localhost:8080/api/tareas')
+      .then(response => {
+        this.tareas = response.data;
+      })
+      .catch(error => console.error('Error:', error));
+    },
     async guardarTareaEditada() {
       try {
-        const tareaIndex = this.grupo.Tareas.findIndex(t => t.ID === this.tareaEnEdicion.ID);
-        if (tareaIndex !== -1) {
-          this.grupo.Tareas[tareaIndex] = { ...this.tareaEnEdicion };
-        }
-        await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+        await axios.put(`http://localhost:8080/api/tareas/${this.tareaEnEdicion.id}`, this.tareaEnEdicion);
+        this.fetchTareas();
       } catch (error) {
         console.error('Error al guardar tarea editada:', error);
       }
@@ -178,42 +183,24 @@ export default {
       axios.put(`http://localhost:8080/api/canjes/${this.currentCanje.id}`, this.currentCanje)
       .then(()=>{
         this.canjeEnEdicion = false;
-        window.location.reload();
+        this.fetchCanjes();
       });
-    },
-    async guardarCanjeEditado() {
-      try {
-        const canjeIndex = this.grupo.Canjes.findIndex(c => c.ID === this.canjeEnEdicion.ID);
-        if (canjeIndex !== -1) {
-          this.grupo.Canjes[canjeIndex] = { ...this.canjeEnEdicion };
-        }
-        await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
-      } catch (error) {
-        console.error('Error al guardar canje editado:', error);
-      }
-      this.canjeEnEdicion = null;
     },
     async eliminarTarea(id) {
       try {
-        this.grupo.Tareas = this.grupo.Tareas.filter(t => t.ID !== id);
-        await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+        await axios.delete(`http://localhost:8080/api/tareas/${id}`);
+        this.fetchTareas();
       } catch (error) {
         console.error('Error al eliminar tarea:', error);
       }
     },
     async eliminarCanje(id) {
       try {
-        this.grupo.Canjes = this.grupo.Canjes.filter(c => c.ID !== id);
-        await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
+        await axios.delete(`http://localhost:8080/api/canjes/${id}`);
+        this.fetchCanjes();
       } catch (error) {
         console.error('Error al eliminar canje:', error);
       }
-    },
-    eliminacionCanje(id){
-      axios.delete(`http://localhost:8080/api/canjes/${id}`)
-      .then(()=>{
-        window.location.reload();
-      });
     },
     async eliminarUsuario(id) {
       try {
@@ -241,10 +228,9 @@ export default {
     },
     async agregarNuevaTarea() {
       try {
-        const nuevaTareaConID = { ...this.nuevaTarea, ID: Date.now() };
-        this.grupo.Tareas.push(nuevaTareaConID);
-        await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
-        this.nuevaTarea = { Nombre: '', Descripcion: '', Puntaje: 0 };
+        await axios.post('http://localhost:8080/api/tareas', this.nuevaTarea);
+        this.nuevaTarea = { nombre: '', descripcion: '', puntaje: 0 };
+        this.fetchTareas();
       } catch (error) {
         console.error('Error al agregar nueva tarea:', error);
       }
@@ -259,18 +245,8 @@ export default {
       axios.post('http://localhost:8080/api/canjes', canjeData)
       .then((response) => {
         console.log("Canje añadido:", response.data);
-        window.location.reload();
+        this.fetchCanjes();
       });
-    },
-    async agregarNuevoCanje() {
-      try {
-        const nuevoCanjeConID = { ...this.nuevoCanje, ID: Date.now() };
-        this.grupo.Canjes.push(nuevoCanjeConID);
-        await axios.put(`http://localhost:3000/grupos/${this.grupo.id}`, this.grupo);
-        this.nuevoCanje = { Nombre: '', Descripcion: '', PuntajeRequerido: 0 };
-      } catch (error) {
-        console.error('Error al agregar nuevo canje:', error);
-      }
     },
     confirmarEliminacion(accion) {
       if (confirm('¿Estás seguro de que deseas eliminar esto?')) {
@@ -280,9 +256,11 @@ export default {
   },
   mounted() {
     this.fetchCanjes();
+    this.fetchTareas();
   }
 };
 </script>
+
 <style scoped>
 .container {
   display: flex;
