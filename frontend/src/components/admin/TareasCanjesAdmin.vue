@@ -61,7 +61,7 @@
                   <span>{{ canje.nombre }} - {{ canje.descripcion }} - Puntaje Requerido: {{ canje.puntos }}</span>
                   <div class="buttons">
                     <button @click="editarCanje(canje)">Editar</button>
-                    <button @click="eliminacionCanje(canje.id)">Eliminar</button>
+                    <button @click="eliminarCanje(canje.id)">Eliminar</button>
                   </div>
                 </div>
               </li>
@@ -202,6 +202,7 @@ export default {
         console.error('Error al eliminar canje:', error);
       }
     },
+
     async eliminarUsuario(id) {
       try {
         this.grupo.Usuarios = this.grupo.Usuarios.filter(u => u.ID !== id);

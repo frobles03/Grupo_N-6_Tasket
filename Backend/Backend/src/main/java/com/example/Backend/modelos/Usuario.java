@@ -64,5 +64,8 @@ public class Usuario {
 
    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    private List<Canje> canjes;
+
+   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   private List<Tarea> tareas;
     
 }
