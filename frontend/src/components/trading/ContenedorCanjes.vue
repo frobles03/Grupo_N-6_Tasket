@@ -1,16 +1,7 @@
 <template>
 
     <div class="container">
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        <TarjetaCanje></TarjetaCanje>
-        
+        <TarjetaCanje></TarjetaCanje> 
     </div>
     
    
