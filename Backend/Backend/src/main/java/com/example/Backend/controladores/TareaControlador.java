@@ -1,61 +1,73 @@
 package com.example.Backend.controladores;
 
-import com.example.Backend.modelos.Tarea;
-import com.example.Backend.repositorios.TareaRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.Backend.modelos.Tarea;
+import com.example.Backend.servicios.TareaServicio;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/tareas")
+@CrossOrigin()
+@RequestMapping("api/tareas")
+@RequiredArgsConstructor
 public class TareaControlador {
 
-    @Autowired
-    private TareaRepositorio TareaRepositorio;
+    private final TareaServicio tareaServicio;
 
     @GetMapping
-    public List<Tarea> getAllTareas() {
-        return TareaRepositorio.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Tarea> getTareaById(@PathVariable Long id) {
-        Optional<Tarea> tarea = TareaRepositorio.findById(id);
-        return tarea.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Tarea createTarea(@RequestBody Tarea tarea) {
-        return TareaRepositorio.save(tarea);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Tarea> updateTarea(@PathVariable Long id, @RequestBody Tarea tareaDetails) {
-        Optional<Tarea> tarea = TareaRepositorio.findById(id);
-        if (tarea.isPresent()) {
-            Tarea tareaToUpdate = tarea.get();
-            tareaToUpdate.setNombre(tareaDetails.getNombre());
-            tareaToUpdate.setDescripcion(tareaDetails.getDescripcion());
-            tareaToUpdate.setPuntaje(tareaDetails.getPuntaje());
-            tareaToUpdate.setUsuario(tareaDetails.getUsuario());
-            final Tarea updatedTarea = TareaRepositorio.save(tareaToUpdate);
-            return ResponseEntity.ok(updatedTarea);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getAllTareas() {
+        try {
+            return ResponseEntity.ok(tareaServicio.getAll());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTarea(@PathVariable Long id) {
-        Optional<Tarea> tarea = TareaRepositorio.findById(id);
-        if (tarea.isPresent()) {
-            TareaRepositorio.delete(tarea.get());
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+    @GetMapping("/{tareaId}")
+    public ResponseEntity<?> getTareaById(@PathVariable Long tareaId) {
+        try {
+            return ResponseEntity.ok(tareaServicio.getTareaById(tareaId));
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createTarea(@RequestBody Tarea tareaToCreate) {
+        try {
+            return ResponseEntity.ok(tareaServicio.createTarea(tareaToCreate));
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/{tareaId}")
+    public ResponseEntity<?> deleteTareaById(@PathVariable Long tareaId) {
+        try {
+            tareaServicio.deleteTareaById(tareaId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{tareaId}")
+    public ResponseEntity<?> updateTarea(@PathVariable Long tareaId, @RequestBody Tarea tareaToUpdate) {
+        try {
+            return ResponseEntity.ok(tareaServicio.updateTarea(tareaToUpdate));
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
