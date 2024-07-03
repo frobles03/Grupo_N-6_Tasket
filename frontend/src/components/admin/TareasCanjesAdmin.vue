@@ -5,14 +5,25 @@
       <div class="tareas-canjes-admin-box">
         <h1 class="welcome-text">Tareas y Canjes</h1>
         <h2 class="center-text">Tareas y Canjes del Grupo {{ nombreGrupo }}</h2>
+        
+        <!-- Nuevo menú de navegación -->
+        <nav class="admin-navigation">
+          <ul>
+            <li><router-link to="/admin-estadistica">Admin Estadística</router-link></li>
+            <li><router-link to="/admin-reportes">Admin Reportes</router-link></li>
+            <li><router-link to="/admin-roles">Admin Roles</router-link></li>
+            <li><router-link to="/admin-usuarios">Admin Usuarios</router-link></li>
+          </ul>
+        </nav>
+
         <div class="content">
+          <!-- Resto del contenido -->
           <div>
             <h3>Tareas:</h3>
             <ul>
               <li v-for="tarea in grupo.Tareas" :key="tarea.ID">
                 <div>
-                  <span>{{ tarea.Nombre }} - {{ tarea.Descripcion }} - Puntaje: {{ tarea.Puntaje
-                    }}</span>
+                  <span>{{ tarea.Nombre }} - {{ tarea.Descripcion }} - Puntaje: {{ tarea.Puntaje }}</span>
                   <div class="buttons">
                     <button @click="iniciarEdicionTarea(tarea)">Editar</button>
                     <button @click="confirmarEliminacion(() => eliminarTarea(tarea.ID))">Eliminar</button>
@@ -47,8 +58,7 @@
             <ul>
               <li v-for="canje in Canjes" :key="canje.id">
                 <div>
-                  <span>{{ canje.nombre }} - {{ canje.descripcion }} - Puntaje Requerido: {{
-                    canje.puntos }}</span>
+                  <span>{{ canje.nombre }} - {{ canje.descripcion }} - Puntaje Requerido: {{ canje.puntos }}</span>
                   <div class="buttons">
                     <button @click="editarCanje(canje)">Editar</button>
                     <button @click="eliminacionCanje(canje.id)">Eliminar</button>
@@ -61,8 +71,7 @@
               <form @submit.prevent="guardarCambios">
                 <label>Nombre: <input v-model="currentCanje.nombre" /></label><br />
                 <label>Descripción: <input v-model="currentCanje.descripcion" /></label><br />
-                <label>Puntaje Requerido: <input type="number"
-                    v-model="currentCanje.puntos" /></label><br />
+                <label>Puntaje Requerido: <input type="number" v-model="currentCanje.puntos" /></label><br />
                 <button type="submit" @click="guardarCambios">Guardar</button>
                 <button @click="cancelarEdicionCanje">Cancelar</button>
               </form>
@@ -146,13 +155,13 @@ export default {
         console.error('Error al cargar datos desde JSON Server:', error);
       }
     },
-         fetchCanjes(){
-         axios.get('http://localhost:8080/api/canjes')
-         .then(response => {
-         this.Canjes = response.data
-          })
-          .catch(error => console.error('Error:', error)) 
-          },
+    fetchCanjes(){
+      axios.get('http://localhost:8080/api/canjes')
+      .then(response => {
+        this.Canjes = response.data;
+      })
+      .catch(error => console.error('Error:', error));
+    },
     async guardarTareaEditada() {
       try {
         const tareaIndex = this.grupo.Tareas.findIndex(t => t.ID === this.tareaEnEdicion.ID);
@@ -166,11 +175,11 @@ export default {
       this.tareaEnEdicion = null;
     },
     guardarCambios(){
-    axios.put(`http://localhost:8080/api/canjes/${this.currentCanje.id}`, this.currentCanje)
-    .then(()=>{
-      this.canjeEnEdicion = false
-    window.location.reload()
-    })
+      axios.put(`http://localhost:8080/api/canjes/${this.currentCanje.id}`, this.currentCanje)
+      .then(()=>{
+        this.canjeEnEdicion = false;
+        window.location.reload();
+      });
     },
     async guardarCanjeEditado() {
       try {
@@ -201,10 +210,10 @@ export default {
       }
     },
     eliminacionCanje(id){
-    axios.delete(`http://localhost:8080/api/canjes/${id}`)
-    .then(()=> {
-    window.location.reload()
-    })
+      axios.delete(`http://localhost:8080/api/canjes/${id}`)
+      .then(()=>{
+        window.location.reload();
+      });
     },
     async eliminarUsuario(id) {
       try {
@@ -220,9 +229,9 @@ export default {
     iniciarEdicionCanje(canje) {
       this.canjeEnEdicion = { ...canje };
     },
-    editarCanje(canje){
-      this.currentCanje = canje
-      this.canjeEnEdicion = true
+    editarCanje(canje) {
+      this.currentCanje = canje;
+      this.canjeEnEdicion = true;
     },
     cancelarEdicionTarea() {
       this.tareaEnEdicion = null;
@@ -241,17 +250,18 @@ export default {
       }
     },
     añadirCanje(){
-     const canjeData = { 
-      nombre: this.nombre,
-      descripcion: this.descripcion, 
-      puntos: this.puntos,};
+      const canjeData = {
+        nombre: this.nombre,
+        descripcion: this.descripcion,
+        puntos: this.puntos,
+      };
 
       axios.post('http://localhost:8080/api/canjes', canjeData)
       .then((response) => {
-       console.log("Canje añadido:", response.data);
-       })
-      window.location.reload()
-      },
+        console.log("Canje añadido:", response.data);
+        window.location.reload();
+      });
+    },
     async agregarNuevoCanje() {
       try {
         const nuevoCanjeConID = { ...this.nuevoCanje, ID: Date.now() };
@@ -273,7 +283,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .container {
   display: flex;
